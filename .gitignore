@@ -53,3 +53,8 @@ war/WEB-INF/classes/
 /.settings
 /.gwt
 /test-classes/
+*.png
+.DS_Store
+*.gwt.rpc
+*.js
+*.gif

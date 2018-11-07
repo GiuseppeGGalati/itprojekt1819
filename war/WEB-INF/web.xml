@@ -16,6 +16,17 @@
     <url-pattern>/itprojekt1819/login</url-pattern>
   </servlet-mapping>
   
+   <!-- Servlets -->
+  <servlet>
+    <servlet-name>socialMediaPinnwandServlet</servlet-name>
+    <servlet-class>de.hdm.itprojekt.server.SocialMediaAdminImpl</servlet-class>
+  </servlet>
+  
+    <servlet-mapping>
+    <servlet-name>socialMediaPinnwandServlet</servlet-name>
+    <url-pattern>/itprojekt1819/socialmedia</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Itprojekt1819.html</welcome-file>
