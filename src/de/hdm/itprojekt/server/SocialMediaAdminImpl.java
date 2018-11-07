@@ -81,14 +81,14 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		nutzer.setVorname(vorname);
 		nutzer.setNachname(nachname);
 		nutzer.setNickname(nickname);
-		return nutzer;
+		return this.nutzerMapper.createNutzer(nutzer);
 	}
 	
 	@Override
 	public Nutzer createNutzer(String email) throws IllegalArgumentException{
 		Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(email);
-		return nutzer;
+		return this.nutzerMapper.createNutzer(nutzer);
 	}
 
 	@Override

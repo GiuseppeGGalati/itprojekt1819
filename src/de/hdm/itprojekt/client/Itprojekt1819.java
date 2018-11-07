@@ -207,7 +207,7 @@ public class Itprojekt1819 implements EntryPoint {
 		 * Konstruktor der aufgerufen wird.
 		 * 
 		 * @param mail:
-		 *            Email Adresse des angemeldeten Nutzers.
+		 * Email Adresse des angemeldeten Nutzers.
 		 */
 		public CreateNutzerDialogBox(String email) {
 			googleMail = email;
@@ -217,6 +217,7 @@ public class Itprojekt1819 implements EntryPoint {
 			buttonPanel.add(ja);
 			buttonPanel.add(nein);
 			this.add(vpanel);
+			vpanel.add(buttonPanel);
 		}
 
 		class DoCreateClickHandler implements ClickHandler {
@@ -224,10 +225,12 @@ public class Itprojekt1819 implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 
+
 				socialMediaVerwaltung.createNutzer(googleMail, new CreateNutzerCallback());
 			}
 
 		}
+		
 
 		class DontCreateClickHandler implements ClickHandler {
 
