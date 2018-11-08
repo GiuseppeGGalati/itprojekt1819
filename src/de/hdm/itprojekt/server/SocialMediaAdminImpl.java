@@ -73,10 +73,9 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	 * @return Nutzer; Zurückgegeben wird ein Objekt der Klasse Nutzer
 	 */
 	@Override
-	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname, int id)
+	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname)
 			throws IllegalArgumentException {
 		Nutzer nutzer = new Nutzer();
-		nutzer.setId(id);
 		nutzer.setEmail(email);
 		nutzer.setVorname(vorname);
 		nutzer.setNachname(nachname);

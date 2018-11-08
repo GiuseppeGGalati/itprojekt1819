@@ -13,7 +13,7 @@ public interface SocialMediaAdmin extends RemoteService{
 	
 	public Nutzer createNutzer(String email) throws IllegalArgumentException;
 	
-	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname, int id) throws IllegalArgumentException;
+	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname) throws IllegalArgumentException;
 	
 	public Nutzer checkEmail(String email) throws IllegalArgumentException;
 

@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -187,9 +188,15 @@ public class Itprojekt1819 implements EntryPoint {
 		 * Instanziierung der GUI-Elemente
 		 */
 		private Label frage = new Label(
-				"Sie haben noch keinen Nutzer angelegt? Möchten Sie einen neuen Nutzer anlegen?");
-		private Button ja = new Button("ja");
-		private Button nein = new Button("nein");
+				"Sie haben noch keinen Nutzer angelegt. Bitte legen Sie nun einen neuen Nutzer an.");
+		private Label vornameLabel = new Label("Vorname:");
+		private Label nachnameLabel = new Label("Nachname:");
+		private Label nicknameLabel = new Label("Nickname:");
+		private TextBox vornameTextbox = new TextBox();
+		private TextBox nachnameTextbox = new TextBox();
+		private TextBox nicknameTextbox = new TextBox();
+		private Button ja = new Button("anlegen");
+		private Button nein = new Button("abbrechen");
 		private VerticalPanel vpanel = new VerticalPanel();
 		private HorizontalPanel buttonPanel = new HorizontalPanel();
 
@@ -198,10 +205,6 @@ public class Itprojekt1819 implements EntryPoint {
 		 * gmail Adresse.
 		 */
 		private String googleMail = "";
-		private String vorname = "";
-		private String nachname = "";
-		private String nickname = "";
-		private int id = 0;
 
 		/**
 		 * Konstruktor der aufgerufen wird.
@@ -214,6 +217,12 @@ public class Itprojekt1819 implements EntryPoint {
 			ja.addClickHandler(new DoCreateClickHandler());
 			nein.addClickHandler(new DontCreateClickHandler());
 			vpanel.add(frage);
+			vpanel.add(vornameLabel);
+			vpanel.add(vornameTextbox);
+			vpanel.add(nachnameLabel);
+			vpanel.add(nachnameTextbox);
+			vpanel.add(nicknameLabel);
+			vpanel.add(nicknameTextbox);
 			buttonPanel.add(ja);
 			buttonPanel.add(nein);
 			this.add(vpanel);
@@ -226,7 +235,7 @@ public class Itprojekt1819 implements EntryPoint {
 			public void onClick(ClickEvent event) {
 
 
-				socialMediaVerwaltung.createNutzer(googleMail, new CreateNutzerCallback());
+				socialMediaVerwaltung.createNutzer(loginInfo.getEmailAddress(), vornameTextbox.getValue(), nachnameTextbox.getValue(), nicknameTextbox.getValue(), new CreateNutzerCallback());
 			}
 
 		}
