@@ -1,5 +1,7 @@
 package de.hdm.itprojekt.client;
 
+import de.hdm.itprojekt.client.gui.CustomTreeModel;
+import de.hdm.itprojekt.client.gui.PinnwandView;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
@@ -21,6 +23,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -102,6 +105,13 @@ public class Itprojekt1819 implements EntryPoint {
 	 */
 	private void loadPinnwand() {
 
+		PinnwandView pinnwandView = new PinnwandView();
+		MenuBar mb = new MenuBar();
+		CustomTreeModel ctm = new CustomTreeModel();
+		RootPanel.get("leftmenutree").clear();
+		RootPanel.get("leftmenutree").add(ctm);
+		
+		signOutAnchor.setHref(loginInfo.getLogoutUrl());
 	}
 
 	/**
