@@ -1,7 +1,9 @@
 package de.hdm.itprojekt.client;
 
+import de.hdm.itprojekt.client.gui.AllAbonnementView;
 import de.hdm.itprojekt.client.gui.CustomTreeModel;
-import de.hdm.itprojekt.client.gui.PinnwandView;
+import de.hdm.itprojekt.client.gui.LeftSideFrame;
+import de.hdm.itprojekt.client.gui.StartseiteForm;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
@@ -105,11 +107,11 @@ public class Itprojekt1819 implements EntryPoint {
 	 */
 	private void loadPinnwand() {
 
-		PinnwandView pinnwandView = new PinnwandView();
+		StartseiteForm startseiteform = new StartseiteForm();
 		MenuBar mb = new MenuBar();
-		CustomTreeModel ctm = new CustomTreeModel();
+		AllAbonnementView apv = new AllAbonnementView();
 		RootPanel.get("leftmenutree").clear();
-		RootPanel.get("leftmenutree").add(ctm);
+		RootPanel.get("leftmenutree").add(apv);
 		
 		signOutAnchor.setHref(loginInfo.getLogoutUrl());
 	}

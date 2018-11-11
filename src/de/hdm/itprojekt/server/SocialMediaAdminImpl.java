@@ -1,13 +1,18 @@
 package de.hdm.itprojekt.server;
 
+import java.util.Vector;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.itprojekt.server.db.AbonnementMapper;
 import de.hdm.itprojekt.server.db.KommentarMapper;
 import de.hdm.itprojekt.server.db.NutzerMapper;
 import de.hdm.itprojekt.server.db.PinnwandMapper;
 import de.hdm.itprojekt.server.db.TextbeitragMapper;
 import de.hdm.itprojekt.shared.SocialMediaAdmin;
+import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
+import de.hdm.itprojekt.shared.bo.Pinnwand;
 
 /**
  * Diese Klasse ist die Implementierungsklasse des Interface SocialMediaAdmin.
@@ -40,6 +45,11 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	 * Datenbank abgleicht.
 	 */
 	private TextbeitragMapper textbeitragMapper = null;
+	/**
+	 * Referenz auf den AbonnementMapper, der Abonnementobjekte mit der
+	 * Datenbank abgleicht.
+	 */
+	private AbonnementMapper abonnementMapper = null;
 
 	/**
 	 * Ein No-Argument-Konstruktor für die Client-seitige Erzeugung von
@@ -62,6 +72,7 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		this.nutzerMapper = NutzerMapper.nutzerMapper();
 		this.pinnwandMapper = PinnwandMapper.pinnwandMapper();
 		this.textbeitragMapper = TextbeitragMapper.textbeitragMapper();
+		this.abonnementMapper = AbonnementMapper.abonnementMapper();
 
 	}
 
@@ -100,6 +111,25 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		} else {
 			return nutzer;
 		}
+	}	
+	@Override
+	public Vector<Abonnement> findAbonnementByNutzerID(int nutzerID) throws IllegalArgumentException{
+		return this.abonnementMapper.findAbonnementByNutzerID(nutzerID);
+		
+	}
+	@Override
+	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException{
+		return this.pinnwandMapper.findAllPinnwand();
+	}
+	public Vector<Nutzer> findNutzerByAbonnement() throws IllegalArgumentException{
+		return null;
+		//noch machen
+	}
+		
+//		findallaboby nutzer id 
+//		findallpinnwände
+//		findnutzerbyabo
+//		getnickname
 	}
 
-}
+

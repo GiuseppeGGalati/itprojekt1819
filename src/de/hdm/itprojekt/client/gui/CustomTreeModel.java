@@ -1,6 +1,11 @@
 package de.hdm.itprojekt.client.gui;
 
-
+/*
+ * Die Implementierung des TreeViewModel ermöglicht die Anzeige von Pinnwänden 
+ * durch eine Baumstruktur in dem linken seitlichen Panel.
+ * 
+ * 
+ */
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.TreeViewModel;
 

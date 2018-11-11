@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.itprojekt.shared.bo.Abonnement;
 
@@ -113,11 +114,12 @@ public class AbonnementMapper {
 
 	}
 
-	public Abonnement findAbonnementByNutzerID(int nutzerID) {
+	public Vector <Abonnement> findAbonnementByNutzerID(int nutzerID) {
 
 		Connection con = DBConnection.connection();
 
-		Abonnement a = new Abonnement();
+		
+		Vector <Abonnement> a = new Vector <Abonnement>();
 
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `abonnement` WHERE `nutzerid`=?");
@@ -131,7 +133,7 @@ public class AbonnementMapper {
 				abonnement.setNutzerID(rs.getInt("nutzerid"));
 				abonnement.setPinnwandID(rs.getInt("pinnwandid"));
 
-				a = abonnement;
+				a.addElement(abonnement);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -151,5 +153,7 @@ public class AbonnementMapper {
 		return a;
 
 	}
+	
+	
 
 }
