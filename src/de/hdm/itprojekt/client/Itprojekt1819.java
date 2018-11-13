@@ -1,13 +1,13 @@
 package de.hdm.itprojekt.client;
 
 import de.hdm.itprojekt.client.gui.AllAbonnementView;
-import de.hdm.itprojekt.client.gui.CustomTreeModel;
 import de.hdm.itprojekt.client.gui.LeftSideFrame;
 import de.hdm.itprojekt.client.gui.StartseiteForm;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Nutzer;
+import de.hdm.itprojekt.shared.bo.Pinnwand;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -286,10 +286,24 @@ public class Itprojekt1819 implements EntryPoint {
 				Cookies.setCookie("signout", loginInfo.getLogoutUrl());
 				Cookies.setCookie("email", result.getEmail());
 				Cookies.setCookie("id", result.getId() + "");
+				socialMediaVerwaltung.createPinnwand(result.getId(), new PinnwandCallback());
 				hide();
 				loadPinnwand();
 
 			}
+			
+		class PinnwandCallback implements AsyncCallback<Pinnwand>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fehler beim Anlegen deiner Pinnwand" +caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(Pinnwand result) {
+			}
+			
+		}
 
 		}
 		// final Button sendButton = new Button("Send");

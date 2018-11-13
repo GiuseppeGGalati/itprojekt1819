@@ -1,5 +1,6 @@
 package de.hdm.itprojekt.server;
 
+import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -13,6 +14,7 @@ import de.hdm.itprojekt.shared.SocialMediaAdmin;
 import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Pinnwand;
+import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 /**
  * Diese Klasse ist die Implementierungsklasse des Interface SocialMediaAdmin.
@@ -95,6 +97,14 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 	
 	@Override
+	public Pinnwand createPinnwand(int nutzerID) throws IllegalArgumentException {
+		Pinnwand pinnwand = new Pinnwand();
+		pinnwand.setNutzerID(nutzerID);
+		
+		return this.pinnwandMapper.createPinnwand(pinnwand);
+	}
+	
+	@Override
 	public Nutzer createNutzer(String email) throws IllegalArgumentException{
 		Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(email);
@@ -121,15 +131,54 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException{
 		return this.pinnwandMapper.findAllPinnwand();
 	}
-	public Vector<Nutzer> findNutzerByAbonnement() throws IllegalArgumentException{
-		return null;
-		//noch machen
-	}
-		
+//	public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws IllegalArgumentException{
+//		
+////		Vector <Abonnement> = findAbonnementByNutzerID(nutzerID)
+////				findAllPinnwand()
+////		Vector <Pinnwand>
+//		
+//		Nutzer n = this.findNutzerByID(abo.getNutzerID());
+//		return n;
+//	}
+	 @Override
+	 public Nutzer findNutzerByID(int nutzerID){
+		 return this.nutzerMapper.findNutzerById(nutzerID);
+	 }
+
 //		findallaboby nutzer id 
 //		findallpinnwände
 //		findnutzerbyabo
 //		getnickname
-	}
+	 
+	 @Override
+	 public Textbeitrag createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt) throws IllegalArgumentException{
+			Textbeitrag textbeitrag = new Textbeitrag();
+			textbeitrag.setPinnwandID(pinnwandID);
+			textbeitrag.setNutzerID(nutzerID);
+			textbeitrag.setKommentarID(kommentarID);
+			textbeitrag.setInhalt(inhalt);
+			textbeitrag.setErzeugungsdatum(new Date());
+			textbeitrag.setModifikationsdatum(new Date());
+			return this.textbeitragMapper.createTextbeitrag(textbeitrag);
+	 }
+	 
+	 @Override
+	 public void deleteNutzer(Nutzer nutzer) throws IllegalArgumentException{
+		 Pinnwand pw = new Pinnwand();
+		 pw.setNutzerID(nutzer.getId());
+		 
+		 this.pinnwandMapper.deletePinnwandByNutzerID(pw);
+		 this.nutzerMapper.deleteNutzer(nutzer);
+	 }
+	 
+		 @Override
+	 public void deletePinnwand(Pinnwand pinnwand) throws IllegalArgumentException {
+			pinnwand.setId(pinnwand.getId());
+				
+				this.pinnwandMapper.deletePinnwand(pinnwand);
+				} 
+		 
+	 }
+
 
 

@@ -2,8 +2,11 @@ package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -25,6 +28,8 @@ public class AllAbonnementView extends LeftSideFrame{
 	 * Instanzierung der GUI-Elemente
 	 */
 	private VerticalPanel vpanel = new VerticalPanel();
+	private Button abonnieren = new Button("Abonnieren");
+	private Button meinePinnwand = new Button("Meine Pinnwand");
 	private Vector<Nutzer> nutzerVector = new Vector<Nutzer>();
 	private SingleSelectionModel<Nutzer> ssm = new SingleSelectionModel<Nutzer>();
     
@@ -34,10 +39,15 @@ public class AllAbonnementView extends LeftSideFrame{
 	@Override
 	protected void run() {
 
+		meinePinnwand.addClickHandler(new meinePinnwandClickHandler());
+
 		//Später löschen und durch Vector mit Callback ersetzen 
 		Nutzer nutzer1 = new Nutzer();
-		nutzer1.setNickname("schwulerHund");
+		Nutzer nutzer2 = new Nutzer();
+		nutzer1.setNickname("dummynutzer");
+		nutzer2.setNickname("StanLee");
 		nutzerVector.add(nutzer1);
+		nutzerVector.add(nutzer2);
 		cellList.setRowData(0, nutzerVector);
 		cellList.setRowCount(nutzerVector.size(), true);
 		cellList.setSelectionModel(ssm);
@@ -50,10 +60,25 @@ public class AllAbonnementView extends LeftSideFrame{
 			}
 		});
 		
+
+		
+		vpanel.add(abonnieren);
+		vpanel.add(meinePinnwand);
 		vpanel.add(cellList);
 		RootPanel.get("leftmenutree").add(vpanel);
 		
 		
 	}
+	class meinePinnwandClickHandler implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+		StartseiteForm startseiteForm = new StartseiteForm();
+		Window.alert("funktioniert");
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(startseiteForm);
+		
+		}
+		
+	}
 }
