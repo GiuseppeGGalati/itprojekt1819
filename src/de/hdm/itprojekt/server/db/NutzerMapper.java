@@ -250,7 +250,7 @@ public class NutzerMapper {
 			 * Für jeden Eintrag im Suchergebnis wird nun ein Nutzer-Objekt
 			 * erstellt.
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				Nutzer nutzer = new Nutzer();
 
 				nutzer.setId(rs.getInt("id"));
@@ -298,7 +298,7 @@ public class NutzerMapper {
 			 * Für jeden Eintrag im Suchergebnis wird nun ein Nutzer-Objekt
 			 * erstellt.
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				Nutzer nutzer = new Nutzer();
 
 				nutzer.setId(rs.getInt("id"));

@@ -126,7 +126,7 @@ public class AbonnementMapper {
 			stmt.setInt(1, nutzerID);
 			ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				Abonnement abonnement = new Abonnement();
 
 				abonnement.setId(rs.getInt("id"));

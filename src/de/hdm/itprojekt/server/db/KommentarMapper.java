@@ -198,7 +198,7 @@ public class KommentarMapper {
 			stmt.setInt(1, textbeitragID);
 			ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
 				Kommentar kommentar = new Kommentar();
 				kommentar.setId(rs.getInt("id"));

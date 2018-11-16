@@ -36,5 +36,7 @@ public interface SocialMediaAdminAsync {
 
 	void deletePinnwand(Pinnwand pinnwand, AsyncCallback<Void> callback);
 
+	void findNutzerByAbo(int nutzerID, AsyncCallback<Vector<Nutzer>> callback);
+
 
 }

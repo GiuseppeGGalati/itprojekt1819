@@ -37,4 +37,6 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	void deletePinnwand(Pinnwand pinnwand) throws IllegalArgumentException;
 
+	Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException;
+
 }

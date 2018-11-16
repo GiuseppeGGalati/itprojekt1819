@@ -131,6 +131,26 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException{
 		return this.pinnwandMapper.findAllPinnwand();
 	}
+	
+	@Override
+	public Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException{
+		
+		Vector<Abonnement> aboVector = findAbonnementByNutzerID(nutzerID);
+		
+		Vector<Pinnwand> pwVector = findAllPinnwand();
+		
+		Vector<Nutzer> nutzerVector = new Vector<Nutzer>();
+		
+		for(int i = 0; i<aboVector.size(); i++){
+			for(int o = 0; o<pwVector.size(); o++){
+				if(aboVector.elementAt(i).getNutzerID() == pwVector.elementAt(o).getNutzerID()){
+					nutzerVector.add(findNutzerByID(aboVector.elementAt(i).getPinnwandID()));
+				}
+				
+			}
+		}
+		return nutzerVector;
+	}
 //	public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws IllegalArgumentException{
 //		
 ////		Vector <Abonnement> = findAbonnementByNutzerID(nutzerID)
