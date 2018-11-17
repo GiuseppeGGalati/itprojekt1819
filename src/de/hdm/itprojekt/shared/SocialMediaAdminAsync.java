@@ -1,6 +1,5 @@
 package de.hdm.itprojekt.shared;
 
-import java.sql.Date;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,6 +36,8 @@ public interface SocialMediaAdminAsync {
 	void deletePinnwand(Pinnwand pinnwand, AsyncCallback<Void> callback);
 
 	void findNutzerByAbo(int nutzerID, AsyncCallback<Vector<Nutzer>> callback);
+
+	void saveNutzer(Nutzer nutzer, AsyncCallback<Void> callback);
 
 
 }

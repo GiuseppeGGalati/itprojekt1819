@@ -39,4 +39,6 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException;
 
+	void saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
+
 }

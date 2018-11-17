@@ -95,17 +95,17 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		nutzer.setNickname(nickname);
 		return this.nutzerMapper.createNutzer(nutzer);
 	}
-	
+
 	@Override
 	public Pinnwand createPinnwand(int nutzerID) throws IllegalArgumentException {
 		Pinnwand pinnwand = new Pinnwand();
 		pinnwand.setNutzerID(nutzerID);
-		
+
 		return this.pinnwandMapper.createPinnwand(pinnwand);
 	}
-	
+
 	@Override
-	public Nutzer createNutzer(String email) throws IllegalArgumentException{
+	public Nutzer createNutzer(String email) throws IllegalArgumentException {
 		Nutzer nutzer = new Nutzer();
 		nutzer.setEmail(email);
 		return this.nutzerMapper.createNutzer(nutzer);
@@ -121,84 +121,91 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		} else {
 			return nutzer;
 		}
-	}	
-	@Override
-	public Vector<Abonnement> findAbonnementByNutzerID(int nutzerID) throws IllegalArgumentException{
-		return this.abonnementMapper.findAbonnementByNutzerID(nutzerID);
-		
 	}
+
 	@Override
-	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException{
+	public Vector<Abonnement> findAbonnementByNutzerID(int nutzerID) throws IllegalArgumentException {
+		return this.abonnementMapper.findAbonnementByNutzerID(nutzerID);
+
+	}
+
+	@Override
+	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException {
 		return this.pinnwandMapper.findAllPinnwand();
 	}
-	
+
 	@Override
-	public Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException{
-		
+	public Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException {
+
 		Vector<Abonnement> aboVector = findAbonnementByNutzerID(nutzerID);
-		
+
 		Vector<Pinnwand> pwVector = findAllPinnwand();
-		
+
 		Vector<Nutzer> nutzerVector = new Vector<Nutzer>();
-		
-		for(int i = 0; i<aboVector.size(); i++){
-			for(int o = 0; o<pwVector.size(); o++){
-				if(aboVector.elementAt(i).getNutzerID() == pwVector.elementAt(o).getNutzerID()){
+
+		for (int i = 0; i < aboVector.size(); i++) {
+			for (int o = 0; o < pwVector.size(); o++) {
+				if (aboVector.elementAt(i).getNutzerID() == pwVector.elementAt(o).getNutzerID()) {
 					nutzerVector.add(findNutzerByID(aboVector.elementAt(i).getPinnwandID()));
 				}
-				
+
 			}
 		}
 		return nutzerVector;
 	}
-//	public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws IllegalArgumentException{
-//		
-////		Vector <Abonnement> = findAbonnementByNutzerID(nutzerID)
-////				findAllPinnwand()
-////		Vector <Pinnwand>
-//		
-//		Nutzer n = this.findNutzerByID(abo.getNutzerID());
-//		return n;
-//	}
-	 @Override
-	 public Nutzer findNutzerByID(int nutzerID){
-		 return this.nutzerMapper.findNutzerById(nutzerID);
-	 }
 
-//		findallaboby nutzer id 
-//		findallpinnwände
-//		findnutzerbyabo
-//		getnickname
-	 
-	 @Override
-	 public Textbeitrag createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt) throws IllegalArgumentException{
-			Textbeitrag textbeitrag = new Textbeitrag();
-			textbeitrag.setPinnwandID(pinnwandID);
-			textbeitrag.setNutzerID(nutzerID);
-			textbeitrag.setKommentarID(kommentarID);
-			textbeitrag.setInhalt(inhalt);
-			textbeitrag.setErzeugungsdatum(new Date());
-			textbeitrag.setModifikationsdatum(new Date());
-			return this.textbeitragMapper.createTextbeitrag(textbeitrag);
-	 }
-	 
-	 @Override
-	 public void deleteNutzer(Nutzer nutzer) throws IllegalArgumentException{
-		 Pinnwand pw = new Pinnwand();
-		 pw.setNutzerID(nutzer.getId());
-		 
-		 this.pinnwandMapper.deletePinnwandByNutzerID(pw);
-		 this.nutzerMapper.deleteNutzer(nutzer);
-	 }
-	 
-		 @Override
-	 public void deletePinnwand(Pinnwand pinnwand) throws IllegalArgumentException {
-			pinnwand.setId(pinnwand.getId());
-				
-				this.pinnwandMapper.deletePinnwand(pinnwand);
-				} 
-		 
-	 }
+	// public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws
+	// IllegalArgumentException{
+	//
+	//// Vector <Abonnement> = findAbonnementByNutzerID(nutzerID)
+	//// findAllPinnwand()
+	//// Vector <Pinnwand>
+	//
+	// Nutzer n = this.findNutzerByID(abo.getNutzerID());
+	// return n;
+	// }
+	@Override
+	public Nutzer findNutzerByID(int nutzerID) {
+		return this.nutzerMapper.findNutzerById(nutzerID);
+	}
 
+	// findallaboby nutzer id
+	// findallpinnwände
+	// findnutzerbyabo
+	// getnickname
 
+	@Override
+	public Textbeitrag createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt)
+			throws IllegalArgumentException {
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setPinnwandID(pinnwandID);
+		textbeitrag.setNutzerID(nutzerID);
+		textbeitrag.setKommentarID(kommentarID);
+		textbeitrag.setInhalt(inhalt);
+		textbeitrag.setErzeugungsdatum(new Date());
+		textbeitrag.setModifikationsdatum(new Date());
+		return this.textbeitragMapper.createTextbeitrag(textbeitrag);
+	}
 
+	@Override
+	public void deleteNutzer(Nutzer nutzer) throws IllegalArgumentException {
+		Pinnwand pw = new Pinnwand();
+		pw.setNutzerID(nutzer.getId());
+
+		this.pinnwandMapper.deletePinnwandByNutzerID(pw);
+		this.nutzerMapper.deleteNutzer(nutzer);
+	}
+
+	@Override
+	public void deletePinnwand(Pinnwand pinnwand) throws IllegalArgumentException {
+		pinnwand.setId(pinnwand.getId());
+
+		this.pinnwandMapper.deletePinnwand(pinnwand);
+	}
+
+	@Override
+	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {
+		this.nutzerMapper.updateNutzer(nutzer);
+	}
+
+}

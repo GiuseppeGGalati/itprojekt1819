@@ -74,24 +74,14 @@ public class Menubar extends MenuBar{
 		}
 	}
 	
-	class NutzerClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-
-
-		
-	}
-	
 	class meinProfilHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Nutzer nutzer = new Nutzer();
-			Window.alert(Cookies.getCookie(nutzer.getEmail()));
+		
+		DialogBoxNutzerUpdate dialogBoxNutzerUpdate = new DialogBoxNutzerUpdate();
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(dialogBoxNutzerUpdate);
 		}
 		
 	}

@@ -129,6 +129,7 @@ public class NutzerMapper {
 			stmt1.setString(2, nutzer.getNachname());
 			stmt1.setString(3, nutzer.getNickname());
 			stmt1.setString(4, nutzer.getEmail());
+			stmt1.setInt(5, nutzer.getId());
 
 			stmt1.executeUpdate();
 			System.out.println("Updated");

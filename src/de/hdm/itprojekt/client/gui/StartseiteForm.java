@@ -57,6 +57,7 @@ public class StartseiteForm extends MainFrame {
 	protected void run() {
 		
 		AllAbonnementView allAbonnementview = new AllAbonnementView();
+		Toolbar toolbar = new Toolbar();
 		Menubar menubar = new Menubar();
 		textbeitragVerfassen.setHeight("1000");
 		textbeitragVerfassen.setWidth("1000");
