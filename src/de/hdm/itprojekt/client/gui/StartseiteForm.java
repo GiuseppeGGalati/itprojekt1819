@@ -56,8 +56,8 @@ public class StartseiteForm extends MainFrame {
 	@Override
 	protected void run() {
 		
-		AllAbonnementView allAbonnementview = new AllAbonnementView();
-		Toolbar toolbar = new Toolbar();
+//		Toolbar toolbar = new Toolbar();
+//		AllAbonnementView allAbonnementview = new AllAbonnementView();
 		Menubar menubar = new Menubar();
 		textbeitragVerfassen.setHeight("1000");
 		textbeitragVerfassen.setWidth("1000");
@@ -67,6 +67,8 @@ public class StartseiteForm extends MainFrame {
 		vpanel.add(textbeitragPosten);
 		vpanel.add(signOutLink);
 		RootPanel.get("content").add(vpanel);
+//		RootPanel.get("leftmenutree").add(toolbar);
+//		RootPanel.get("leftmenutree").add(allAbonnementview);
 
 		
 		

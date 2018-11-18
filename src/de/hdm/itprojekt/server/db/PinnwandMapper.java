@@ -166,7 +166,7 @@ public class PinnwandMapper {
 			stmt.setInt(1, nutzerID);
 			ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
 				Pinnwand pinnwand = new Pinnwand();
 				pinnwand.setId(rs.getInt("id"));

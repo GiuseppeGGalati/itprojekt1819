@@ -14,6 +14,8 @@ public abstract class LeftSideFrame extends HorizontalPanel {
 	 * Automatisch geladene Methode onLoad(). Löscht den Div-Container content
 	 * und ruft die Methode run() auf.
 	 */
+
+	
 	public void onLoad() {
 
 		/*
@@ -21,7 +23,8 @@ public abstract class LeftSideFrame extends HorizontalPanel {
 		 * der Superklasse eine Initialisierung vorzunehmen.
 		 */
 		super.onLoad();
-		RootPanel.get("leftmenutree").clear();
+		//RootPanel.get("leftmenutree").clear();
+
 		this.run();
 	}
 

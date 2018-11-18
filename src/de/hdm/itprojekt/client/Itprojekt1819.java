@@ -3,6 +3,7 @@ package de.hdm.itprojekt.client;
 import de.hdm.itprojekt.client.gui.AllAbonnementView;
 import de.hdm.itprojekt.client.gui.LeftSideFrame;
 import de.hdm.itprojekt.client.gui.StartseiteForm;
+import de.hdm.itprojekt.client.gui.Toolbar;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
@@ -109,10 +110,12 @@ public class Itprojekt1819 implements EntryPoint {
 
 		StartseiteForm startseiteform = new StartseiteForm();
 		MenuBar mb = new MenuBar();
+		Toolbar toolbar = new Toolbar();
 		AllAbonnementView apv = new AllAbonnementView();
 		RootPanel.get("leftmenutree").clear();
+		RootPanel.get("leftmenutree").add(toolbar);
 		RootPanel.get("leftmenutree").add(apv);
-		
+
 		signOutAnchor.setHref(loginInfo.getLogoutUrl());
 	}
 
@@ -222,7 +225,7 @@ public class Itprojekt1819 implements EntryPoint {
 		 * Konstruktor der aufgerufen wird.
 		 * 
 		 * @param mail:
-		 * Email Adresse des angemeldeten Nutzers.
+		 *            Email Adresse des angemeldeten Nutzers.
 		 */
 		public CreateNutzerDialogBox(String email) {
 			googleMail = email;
@@ -246,12 +249,11 @@ public class Itprojekt1819 implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 
-
-				socialMediaVerwaltung.createNutzer(loginInfo.getEmailAddress(), vornameTextbox.getValue(), nachnameTextbox.getValue(), nicknameTextbox.getValue(), new CreateNutzerCallback());
+				socialMediaVerwaltung.createNutzer(loginInfo.getEmailAddress(), vornameTextbox.getValue(),
+						nachnameTextbox.getValue(), nicknameTextbox.getValue(), new CreateNutzerCallback());
 			}
 
 		}
-		
 
 		class DontCreateClickHandler implements ClickHandler {
 
@@ -291,19 +293,19 @@ public class Itprojekt1819 implements EntryPoint {
 				loadPinnwand();
 
 			}
-			
-		class PinnwandCallback implements AsyncCallback<Pinnwand>{
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Fehler beim Anlegen deiner Pinnwand" +caught.getMessage());
-			}
+			class PinnwandCallback implements AsyncCallback<Pinnwand> {
 
-			@Override
-			public void onSuccess(Pinnwand result) {
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Fehler beim Anlegen deiner Pinnwand" + caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(Pinnwand result) {
+				}
+
 			}
-			
-		}
 
 		}
 		// final Button sendButton = new Button("Send");
