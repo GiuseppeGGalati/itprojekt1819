@@ -109,7 +109,7 @@ public class Itprojekt1819 implements EntryPoint {
 	private void loadPinnwand() {
 
 		StartseiteForm startseiteform = new StartseiteForm();
-		MenuBar mb = new MenuBar();
+//		MenuBar mb = new MenuBar();
 		Toolbar toolbar = new Toolbar();
 		AllAbonnementView apv = new AllAbonnementView();
 		RootPanel.get("leftmenutree").clear();

@@ -1,23 +1,19 @@
 package de.hdm.itprojekt.client.gui;
 
-import java.util.Date;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
+import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 /**
@@ -39,36 +35,35 @@ public class StartseiteForm extends MainFrame {
 	 * Instanziierung der GUI Elemente
 	 */
 	private VerticalPanel vpanel = new VerticalPanel();
-	private Anchor signOutLink = new Anchor("Logout");
 	private HTML headline = new HTML("Willkommen auf deiner Pinnwand");
 	private TextArea textbeitragVerfassen = new TextArea();
 	private Button textbeitragPosten = new Button("Beitrag teilen");
 	
-
-
 	public StartseiteForm(){
-	    super.onLoad();
+		super.onLoad();
+	}
+
+	public StartseiteForm(final Nutzer nutzer){
+	    
+		
+	    
 
 		
+		super.onLoad();
 	}
 	
 
 	@Override
 	protected void run() {
-		
-//		Toolbar toolbar = new Toolbar();
-//		AllAbonnementView allAbonnementview = new AllAbonnementView();
-		Menubar menubar = new Menubar();
+
 		textbeitragVerfassen.setHeight("1000");
 		textbeitragVerfassen.setWidth("1000");
 		textbeitragPosten.addClickHandler(new PostenHandler());
 		vpanel.add(headline);
 		vpanel.add(textbeitragVerfassen);
 		vpanel.add(textbeitragPosten);
-		vpanel.add(signOutLink);
 		RootPanel.get("content").add(vpanel);
-//		RootPanel.get("leftmenutree").add(toolbar);
-//		RootPanel.get("leftmenutree").add(allAbonnementview);
+
 
 		
 		

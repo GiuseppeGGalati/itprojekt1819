@@ -2,21 +2,16 @@ package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.client.ClientsideSettings;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
-import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 
 public class AllAbonnementView extends LeftSideFrame {
@@ -30,9 +25,9 @@ public class AllAbonnementView extends LeftSideFrame {
 	 * Instanzierung der GUI-Elemente
 	 */
 	private VerticalPanel vpanel = new VerticalPanel();
-	private Button abonnieren = new Button("Abonnieren");
-	private Button meinePinnwand = new Button("Meine Pinnwand");
 	private SingleSelectionModel<Nutzer> ssm = new SingleSelectionModel<Nutzer>();
+	private SingleSelectionModel<Nutzer> ssm1 = new SingleSelectionModel<Nutzer>();
+	private Nutzer nutzer = new Nutzer();
 
 	// Create a CellList that uses the cell.
 	private CellList<Nutzer> cellList = new CellList<Nutzer>(new CellListAbonnement());
@@ -44,11 +39,6 @@ public class AllAbonnementView extends LeftSideFrame {
 	@Override
 	protected void run() {
 
-		meinePinnwand.addClickHandler(new meinePinnwandClickHandler());
-
-		// Später löschen und durch Vector mit Callback ersetzen
-		Abonnement abonnement = new Abonnement();
-		Nutzer nutzer = new Nutzer();
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 		socialmediaVerwaltung.findNutzerByAbo(nutzer.getId(), new CellListCallback());
 
@@ -57,13 +47,12 @@ public class AllAbonnementView extends LeftSideFrame {
 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				Window.alert(ssm.getSelectedObject().getNickname());
+
+				StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
 
 			}
 		});
 
-		vpanel.add(abonnieren);
-		vpanel.add(meinePinnwand);
 		vpanel.add(cellList);
 		this.add(vpanel);
 
@@ -78,23 +67,37 @@ public class AllAbonnementView extends LeftSideFrame {
 
 		@Override
 		public void onSuccess(Vector<Nutzer> result) {
-
 			cellList.setRowData(0, result);
 			cellList.setRowCount(result.size(), true);
 
 		}
 	}
 
-	class meinePinnwandClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			StartseiteForm startseiteForm = new StartseiteForm();
-			Window.alert("funktioniert");
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(startseiteForm);
-
-		}
-
-	}
+	// class MeinePinnwandCellListCallback implements AsyncCallback<Nutzer>{
+	//
+	// @Override
+	// public void onFailure(Throwable caught) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onSuccess(Nutzer result) {
+	//
+	// nutzerVector.add(result);
+	// }
+	// }
+	//
+	// class meinePinnwandClickHandler implements ClickHandler {
+	//
+	// @Override
+	// public void onClick(ClickEvent event) {
+	// StartseiteForm startseiteForm = new StartseiteForm(nutzer);
+	// Window.alert("funktioniert");
+	// RootPanel.get("content").clear();
+	// RootPanel.get("content").add(startseiteForm);
+	//
+	// }
+	//
+	// }
 }

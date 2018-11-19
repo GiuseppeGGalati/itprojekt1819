@@ -12,12 +12,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.itprojekt.client.ClientsideSettings;
 import de.hdm.itprojekt.client.LoginInfo;
-import de.hdm.itprojekt.client.gui.Menubar.LoginCallback;
-import de.hdm.itprojekt.client.gui.Menubar.meinProfilHandler;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
-import de.hdm.itprojekt.shared.bo.Nutzer;
 
 public class Toolbar extends LeftSideFrame {
 
@@ -31,7 +28,7 @@ public class Toolbar extends LeftSideFrame {
 	/**
 	 * Instanzierung der GUI-Elemente
 	 */
-	private HorizontalPanel hpanel = new HorizontalPanel();
+	private HorizontalPanel toolbarPanel = new HorizontalPanel();
 	private Button abonnierenBt = new Button("suche/abonnieren");
 	private Button meinProfilBt = new Button("MeinProfil");
 	private Button logoutBt = new Button("Logout");
@@ -52,11 +49,17 @@ public class Toolbar extends LeftSideFrame {
 		logoutBt.setHTML("<img src = 'images/logout.png'/>");
 		logoutBt.setPixelSize(40, 40);
 
-		hpanel.add(abonnierenBt);
-		hpanel.add(meinProfilBt);
-		hpanel.add(logoutBt);
+		abonnierenBt.setStylePrimaryName("toolbarButton");
+		meinProfilBt.setStylePrimaryName("toolbarButton");
+		logoutBt.setStylePrimaryName("toolbarButton");
+		toolbarPanel.setStylePrimaryName("toolbarPanel");
 
-		this.add(hpanel);
+
+		toolbarPanel.add(abonnierenBt);
+		toolbarPanel.add(meinProfilBt);
+		toolbarPanel.add(logoutBt);
+
+		this.add(toolbarPanel);
 
 		meinProfilBt.addClickHandler(new meinProfilHandler());
 		logoutBt.addClickHandler(new LogoutHandler());

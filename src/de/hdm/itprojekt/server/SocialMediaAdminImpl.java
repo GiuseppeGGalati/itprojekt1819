@@ -142,6 +142,8 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		Vector<Pinnwand> pwVector = findAllPinnwand();
 
 		Vector<Nutzer> nutzerVector = new Vector<Nutzer>();
+		
+		nutzerVector.add(findNutzerByID(nutzerID));
 
 		for (int i = 0; i < aboVector.size(); i++) {
 			for (int o = 0; o < pwVector.size(); o++) {
@@ -151,6 +153,8 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 			}
 		}
+		
+		
 		return nutzerVector;
 	}
 
