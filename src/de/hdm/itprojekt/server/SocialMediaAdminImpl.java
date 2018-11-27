@@ -142,7 +142,7 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		Vector<Pinnwand> pwVector = findAllPinnwand();
 
 		Vector<Nutzer> nutzerVector = new Vector<Nutzer>();
-		
+
 		nutzerVector.add(findNutzerByID(nutzerID));
 
 		for (int i = 0; i < aboVector.size(); i++) {
@@ -153,10 +153,10 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 			}
 		}
-		
-		
+
 		return nutzerVector;
 	}
+	 
 
 	// public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws
 	// IllegalArgumentException{
@@ -173,18 +173,27 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		return this.nutzerMapper.findNutzerById(nutzerID);
 	}
 
-	// findallaboby nutzer id
-	// findallpinnwände
-	// findnutzerbyabo
-	// getnickname
+	@Override
+	public Pinnwand findPinnwandByNutzerID(int nutzerID) {
+		return this.pinnwandMapper.findPinnwandByNutzerId(nutzerID);
+	}
+	
+	@Override
+	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID){
+		return this.textbeitragMapper.findTextbeitragByPinnwandId(pinnwandID);
+	}
+	
+	@Override
+	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID){
+		return this.textbeitragMapper.findTextbeitragByNutzerId(nutzerID);
+	}
 
 	@Override
-	public Textbeitrag createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt)
+	public Textbeitrag createTextbeitrag(int nutzerID, String inhalt)
 			throws IllegalArgumentException {
 		Textbeitrag textbeitrag = new Textbeitrag();
-		textbeitrag.setPinnwandID(pinnwandID);
+		textbeitrag.setPinnwandID(nutzerID);
 		textbeitrag.setNutzerID(nutzerID);
-		textbeitrag.setKommentarID(kommentarID);
 		textbeitrag.setInhalt(inhalt);
 		textbeitrag.setErzeugungsdatum(new Date());
 		textbeitrag.setModifikationsdatum(new Date());
@@ -205,6 +214,13 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		pinnwand.setId(pinnwand.getId());
 
 		this.pinnwandMapper.deletePinnwand(pinnwand);
+	}
+	
+	@Override
+	public void deleteAbonnement(Abonnement abonnement) throws IllegalArgumentException {
+		abonnement.setNutzerID(abonnement.getNutzerID());
+		abonnement.setPinnwandID(abonnement.getPinnwandID());
+		this.abonnementMapper.deleteAbonnement(abonnement);
 	}
 
 	@Override

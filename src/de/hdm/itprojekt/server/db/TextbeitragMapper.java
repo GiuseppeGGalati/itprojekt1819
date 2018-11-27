@@ -39,22 +39,21 @@ public class TextbeitragMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid" + "FROM textbeitrag");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM `textbeitrag`");
 
 			if (rs.next()) {
 
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO textbeitrag(id, pinnwandid, nutzerid, kommentarid,"
-								+ "inhalt, erzeugungsdatum, modifikationsdatum) VALUES(?, ?, ?, ?, ?, ?, ?)",
+						"INSERT INTO textbeitrag(id, nutzerid, inhalt, erzeugungsdatum, "
+						+ "modifikationsdatum)"
+						+ " VALUES(?, ?, ?, ?, ?)",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, textbeitrag.getId());
-				stmt1.setInt(2, textbeitrag.getPinnwandID());
-				stmt1.setInt(3, textbeitrag.getNutzerID());
-				stmt1.setInt(4, textbeitrag.getKommentarID());
-				stmt1.setString(5, textbeitrag.getInhalt());
-				stmt1.setTimestamp(6, sqlDate);
-				stmt1.setTimestamp(7, sqlDate1);
+				stmt1.setInt(2, textbeitrag.getNutzerID());
+				stmt1.setString(3, textbeitrag.getInhalt());
+				stmt1.setTimestamp(4, sqlDate);
+				stmt1.setTimestamp(5, sqlDate1);
 
 				System.out.println(stmt);
 				stmt1.executeUpdate();
@@ -161,7 +160,7 @@ public class TextbeitragMapper {
 		return result;
 	}
 
-	public Vector<Textbeitrag> findTextbeitragByNutzerid(int nutzerID) {
+	public Vector<Textbeitrag> findTextbeitragByNutzerId(int nutzerID) {
 
 		Connection con = DBConnection.connection();
 

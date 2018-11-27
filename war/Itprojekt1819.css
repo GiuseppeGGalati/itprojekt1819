@@ -348,6 +348,13 @@ body {
 	border: none;
 	
 }
+.unfollowButton{
+	text-align: center;
+	background: none;
+	cursor: pointer;
+	border: none;
+	
+}
 
 .toolbarPanel{
 		margin-left: 5px;

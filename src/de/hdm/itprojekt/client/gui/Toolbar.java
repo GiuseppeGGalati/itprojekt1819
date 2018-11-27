@@ -54,7 +54,6 @@ public class Toolbar extends LeftSideFrame {
 		logoutBt.setStylePrimaryName("toolbarButton");
 		toolbarPanel.setStylePrimaryName("toolbarPanel");
 
-
 		toolbarPanel.add(abonnierenBt);
 		toolbarPanel.add(meinProfilBt);
 		toolbarPanel.add(logoutBt);

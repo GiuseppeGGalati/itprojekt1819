@@ -49,6 +49,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		Nutzer n = new Nutzer();
 		n.setId(Integer.parseInt(Cookies.getCookie("id")));
 		n.setEmail(Cookies.getCookie("email"));
+		
 		socialmediaVerwaltung.findNutzerByID(n.getId(), new FindNutzerCallback());
 
 		ft.setWidget(0, 0, updateLabel);
@@ -100,9 +101,11 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 
+//			Nutzer n = new Nutzer();
+//			n.setId(Integer.parseInt(Cookies.getCookie("id")));
 			StartseiteForm startseiteForm = new StartseiteForm();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(startseiteForm);
+//			RootPanel.get("content").clear();
+//			RootPanel.get("content").add(startseiteForm);
 		}
 
 	}
@@ -137,9 +140,11 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		@Override
 		public void onSuccess(Void result) {
 			Window.alert("Nutzer erfolgreich geändert");
+//			Nutzer n = new Nutzer();
+//			n.setId(Integer.parseInt(Cookies.getCookie("id")));
 			StartseiteForm startseiteForm = new StartseiteForm();
-			RootPanel.get("content").clear();
-			RootPanel.get("content").add(startseiteForm);
+//			RootPanel.get("content").clear();
+//			RootPanel.get("content").add(startseiteForm);
 		}
 
 	}

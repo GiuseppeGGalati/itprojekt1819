@@ -108,8 +108,8 @@ public class Itprojekt1819 implements EntryPoint {
 	 */
 	private void loadPinnwand() {
 
+
 		StartseiteForm startseiteform = new StartseiteForm();
-//		MenuBar mb = new MenuBar();
 		Toolbar toolbar = new Toolbar();
 		AllAbonnementView apv = new AllAbonnementView();
 		RootPanel.get("leftmenutree").clear();
@@ -128,7 +128,6 @@ public class Itprojekt1819 implements EntryPoint {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			signInAnchor.setHref(loginInfo.getLoginUrl());
 			Window.open(signInAnchor.getHref(), "_self", "");
 		}
