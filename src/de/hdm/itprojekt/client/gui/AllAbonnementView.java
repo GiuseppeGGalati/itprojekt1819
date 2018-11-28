@@ -26,8 +26,8 @@ public class AllAbonnementView extends LeftSideFrame {
 	 */
 	private VerticalPanel vpanel = new VerticalPanel();
 	private SingleSelectionModel<Nutzer> ssm = new SingleSelectionModel<Nutzer>();
-	private SingleSelectionModel<Nutzer> ssm1 = new SingleSelectionModel<Nutzer>();
 	private Nutzer nutzer = new Nutzer();
+	
 
 	// Create a CellList that uses the cell.
 	private CellList<Nutzer> cellList = new CellList<Nutzer>(new CellListAbonnement());
@@ -48,9 +48,16 @@ public class AllAbonnementView extends LeftSideFrame {
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 
-				StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
+				if (ssm.getSelectedObject().getNickname() != null){
+				AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
+				}
+				else{
+//				StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
+				StartseiteForm startseiteForm = new StartseiteForm();
+				}
 
-			}
+	
+				}
 		});
 
 		vpanel.add(cellList);

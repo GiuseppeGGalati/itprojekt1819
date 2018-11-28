@@ -26,9 +26,6 @@ public interface SocialMediaAdminAsync {
 
 	void findNutzerByID(int nutzerID, AsyncCallback<Nutzer> callback);
 
-	void createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt,
-			AsyncCallback<Textbeitrag> callback);
-
 	void deleteNutzer(Nutzer nutzer, AsyncCallback<Void> callback);
 
 	void createPinnwand(int nutzerID, AsyncCallback<Pinnwand> callback);
@@ -38,6 +35,18 @@ public interface SocialMediaAdminAsync {
 	void findNutzerByAbo(int nutzerID, AsyncCallback<Vector<Nutzer>> callback);
 
 	void saveNutzer(Nutzer nutzer, AsyncCallback<Void> callback);
+
+	void findPinnwandByNutzerID(int nutzerID, AsyncCallback<Pinnwand> callback);
+
+	void findTextbeitragByPinnwandID(int pinnwandID, AsyncCallback<Vector<Textbeitrag>> callback);
+
+	void findTextbeitragByNutzerID(int nutzerID, AsyncCallback<Vector<Textbeitrag>> callback);
+
+	void deleteAbonnement(Abonnement abonnement, AsyncCallback<Void> callback);
+
+	void createTextbeitrag(int nutzerID, String inhalt, AsyncCallback<Textbeitrag> callback);
+
+	void deleteTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
 
 
 }

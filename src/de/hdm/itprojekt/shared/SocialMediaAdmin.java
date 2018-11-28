@@ -29,7 +29,7 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	Nutzer findNutzerByID(int nutzerID);
 
-	Textbeitrag createTextbeitrag(int pinnwandID, int nutzerID, int kommentarID, String inhalt) throws IllegalArgumentException;
+	Textbeitrag createTextbeitrag(int nutzerID, String inhalt) throws IllegalArgumentException;
 
 	void deleteNutzer(Nutzer nutzer) throws IllegalArgumentException;
 
@@ -40,5 +40,16 @@ public interface SocialMediaAdmin extends RemoteService{
 	Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException;
 
 	void saveNutzer(Nutzer nutzer) throws IllegalArgumentException;
+
+	Pinnwand findPinnwandByNutzerID(int nutzerID) throws IllegalArgumentException;
+
+	Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) throws IllegalArgumentException;
+
+	Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) throws IllegalArgumentException;
+
+	void deleteAbonnement(Abonnement abonnement) throws IllegalArgumentException;
+
+	void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
+
 
 }

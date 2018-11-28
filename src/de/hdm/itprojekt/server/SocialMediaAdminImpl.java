@@ -222,6 +222,12 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		abonnement.setPinnwandID(abonnement.getPinnwandID());
 		this.abonnementMapper.deleteAbonnement(abonnement);
 	}
+	
+	@Override
+	public void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException {
+		this.textbeitragMapper.deleteTextbeitrag(textbeitrag);
+		
+	}
 
 	@Override
 	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {

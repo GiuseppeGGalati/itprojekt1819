@@ -96,10 +96,12 @@ public class AbonnementMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("DELETE * FROM `abonnement` WHERE id=?");
+			PreparedStatement stmt = con.prepareStatement("DELETE * FROM `abonnement` WHERE nutzerid=? AND pinnwandid=?");
 
-			stmt.setInt(1, abonnement.getId());
-			stmt.executeQuery();
+			stmt.setInt(1, abonnement.getNutzerID());
+			stmt.setInt(2, abonnement.getPinnwandID());
+
+			stmt.executeUpdate();
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

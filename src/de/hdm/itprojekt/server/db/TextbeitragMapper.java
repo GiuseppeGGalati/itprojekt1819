@@ -111,10 +111,10 @@ public class TextbeitragMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("DELETE FROM `textbeitrag` WHERE id=?");
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM `textbeitrag` WHERE id= ? ");
 
 			stmt.setInt(1, textbeitrag.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -167,7 +167,8 @@ public class TextbeitragMapper {
 		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `textbeitrag` WHERE `nutzerid`=? ");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `textbeitrag` WHERE `nutzerid`=? "
+					+ "ORDER BY id DESC");
 
 			stmt.setInt(1, nutzerID);
 			ResultSet rs = stmt.executeQuery();
@@ -176,9 +177,7 @@ public class TextbeitragMapper {
 				Textbeitrag textbeitrag = new Textbeitrag();
 
 				textbeitrag.setId(rs.getInt("id"));
-				textbeitrag.setPinnwandID(rs.getInt("pinnwandid"));
 				textbeitrag.setNutzerID(rs.getInt("nutzerid"));
-				textbeitrag.setKommentarID(rs.getInt("kommentarid"));
 				textbeitrag.setInhalt(rs.getString("inhalt"));
 				textbeitrag.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				textbeitrag.setModifikationsdatum(rs.getDate("modifikationsdatum"));
