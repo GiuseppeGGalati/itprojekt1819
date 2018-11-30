@@ -140,11 +140,8 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		@Override
 		public void onSuccess(Void result) {
 			Window.alert("Nutzer erfolgreich geändert");
-//			Nutzer n = new Nutzer();
-//			n.setId(Integer.parseInt(Cookies.getCookie("id")));
+			hide();
 			StartseiteForm startseiteForm = new StartseiteForm();
-//			RootPanel.get("content").clear();
-//			RootPanel.get("content").add(startseiteForm);
 		}
 
 	}

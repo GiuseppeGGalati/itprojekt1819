@@ -32,37 +32,37 @@ public class AllAbonnementView extends LeftSideFrame {
 	// Create a CellList that uses the cell.
 	private CellList<Nutzer> cellList = new CellList<Nutzer>(new CellListAbonnement());
 
-	public AllAbonnementView() {
-		super.onLoad();
+	public AllAbonnementView() {		
+		
+	nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+	socialmediaVerwaltung.findNutzerByAbo(nutzer.getId(), new CellListCallback());
+
+	cellList.setSelectionModel(ssm);
+	ssm.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+		@Override
+		public void onSelectionChange(SelectionChangeEvent event) {
+
+			if (ssm.getSelectedObject().getNickname() != null){
+			AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
+			}
+			else{
+//			StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
+			StartseiteForm startseiteForm = new StartseiteForm();
+			}
+
+
+			}
+	});
+
+
+		vpanel.add(cellList);
+		this.add(vpanel);
+		onLoad();
 	}
 
 	@Override
 	protected void run() {
-
-		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
-		socialmediaVerwaltung.findNutzerByAbo(nutzer.getId(), new CellListCallback());
-
-		cellList.setSelectionModel(ssm);
-		ssm.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-
-				if (ssm.getSelectedObject().getNickname() != null){
-				AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
-				}
-				else{
-//				StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
-				StartseiteForm startseiteForm = new StartseiteForm();
-				}
-
-	
-				}
-		});
-
-		vpanel.add(cellList);
-		this.add(vpanel);
-
 	}
 
 	class CellListCallback implements AsyncCallback<Vector<Nutzer>> {
