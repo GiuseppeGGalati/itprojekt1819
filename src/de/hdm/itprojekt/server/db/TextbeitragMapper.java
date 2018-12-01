@@ -34,7 +34,6 @@ public class TextbeitragMapper {
 
 		Connection con = DBConnection.connection();
 		java.sql.Timestamp sqlDate = new java.sql.Timestamp(textbeitrag.getErzeugungsdatum().getTime());
-		java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(textbeitrag.getModifikationsdatum().getTime());
 
 		try {
 			Statement stmt = con.createStatement();
@@ -44,16 +43,14 @@ public class TextbeitragMapper {
 			if (rs.next()) {
 
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO textbeitrag(id, nutzerid, inhalt, erzeugungsdatum, "
-						+ "modifikationsdatum)"
-						+ " VALUES(?, ?, ?, ?, ?)",
+						"INSERT INTO textbeitrag(id, nutzerid, inhalt, erzeugungsdatum)"
+						+ " VALUES(?, ?, ?, ?)",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, textbeitrag.getId());
 				stmt1.setInt(2, textbeitrag.getNutzerID());
 				stmt1.setString(3, textbeitrag.getInhalt());
 				stmt1.setTimestamp(4, sqlDate);
-				stmt1.setTimestamp(5, sqlDate1);
 
 				System.out.println(stmt);
 				stmt1.executeUpdate();
@@ -72,23 +69,20 @@ public class TextbeitragMapper {
 	}
 
 	public Textbeitrag updateTextbeitrag(Textbeitrag textbeitrag) {
-
-		Connection con = DBConnection.connection();
-		java.sql.Timestamp sqlDate = new java.sql.Timestamp(textbeitrag.getErzeugungsdatum().getTime());
+		String sql = "UPDATE textbeitrag SET inhalt=?, modifikationsdatum=? WHERE id=?";
 		java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(textbeitrag.getModifikationsdatum().getTime());
 
-		try {
-			PreparedStatement stmt1 = con
-					.prepareStatement("UPDATE FROM `textbeitrag` SET `id`=?, `pinnwandid`=?, `nutzerid`=?,"
-							+ "`kommentarid`=?, `inhalt`=?, `erzeugungsdatum`=?, `modifikationsdatum`=? WHERE id=? ");
+		Connection con = DBConnection.connection();
+//		java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(textbeitrag.getModifikationsdatum().getTime());
 
-			stmt1.setInt(1, textbeitrag.getId());
-			stmt1.setInt(2, textbeitrag.getPinnwandID());
-			stmt1.setInt(3, textbeitrag.getNutzerID());
-			stmt1.setInt(4, textbeitrag.getKommentarID());
-			stmt1.setString(5, textbeitrag.getInhalt());
-			stmt1.setTimestamp(6, sqlDate);
-			stmt1.setTimestamp(7, sqlDate1);
+		try {
+			PreparedStatement stmt1 = con.prepareStatement(sql);
+
+			stmt1.setString(1, textbeitrag.getInhalt());
+			stmt1.setTimestamp(2, sqlDate1);
+			stmt1.setInt(3, textbeitrag.getId());
+			stmt1.executeUpdate();
+
 
 			System.out.println("Updated");
 

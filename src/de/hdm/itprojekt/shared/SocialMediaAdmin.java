@@ -51,5 +51,7 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
 
+	void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
+
 
 }

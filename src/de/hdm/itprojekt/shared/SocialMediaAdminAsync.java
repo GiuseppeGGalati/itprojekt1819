@@ -48,5 +48,7 @@ public interface SocialMediaAdminAsync {
 
 	void deleteTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
 
+	void saveTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
+
 
 }

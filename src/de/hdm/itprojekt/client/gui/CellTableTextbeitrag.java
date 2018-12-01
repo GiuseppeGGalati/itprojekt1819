@@ -27,8 +27,11 @@ public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
 
 		@Override
 		public String getValue(Textbeitrag object) {
-			// TODO Auto-generated method stub
-			return object.getErzeugungsdatum().toString();
+			if(object.getModifikationsdatum() == null){
+				
+				return object.getErzeugungsdatum().toString();
+			}
+			return object.getModifikationsdatum().toString();
 		}
 
 	}

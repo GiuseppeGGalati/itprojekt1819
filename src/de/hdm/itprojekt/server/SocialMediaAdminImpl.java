@@ -156,7 +156,6 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 		return nutzerVector;
 	}
-	 
 
 	// public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws
 	// IllegalArgumentException{
@@ -177,20 +176,19 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	public Pinnwand findPinnwandByNutzerID(int nutzerID) {
 		return this.pinnwandMapper.findPinnwandByNutzerId(nutzerID);
 	}
-	
+
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID){
+	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) {
 		return this.textbeitragMapper.findTextbeitragByPinnwandId(pinnwandID);
 	}
-	
+
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID){
+	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) {
 		return this.textbeitragMapper.findTextbeitragByNutzerId(nutzerID);
 	}
 
 	@Override
-	public Textbeitrag createTextbeitrag(int nutzerID, String inhalt)
-			throws IllegalArgumentException {
+	public Textbeitrag createTextbeitrag(int nutzerID, String inhalt) throws IllegalArgumentException {
 		Textbeitrag textbeitrag = new Textbeitrag();
 		textbeitrag.setPinnwandID(nutzerID);
 		textbeitrag.setNutzerID(nutzerID);
@@ -215,23 +213,29 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 		this.pinnwandMapper.deletePinnwand(pinnwand);
 	}
-	
+
 	@Override
 	public void deleteAbonnement(Abonnement abonnement) throws IllegalArgumentException {
 		abonnement.setNutzerID(abonnement.getNutzerID());
 		abonnement.setPinnwandID(abonnement.getPinnwandID());
 		this.abonnementMapper.deleteAbonnement(abonnement);
 	}
-	
+
 	@Override
 	public void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException {
 		this.textbeitragMapper.deleteTextbeitrag(textbeitrag);
-		
+
 	}
 
 	@Override
 	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {
 		this.nutzerMapper.updateNutzer(nutzer);
+	}
+
+	@Override
+	public void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException {
+		textbeitrag.setModifikationsdatum(new Date());
+		textbeitragMapper.updateTextbeitrag(textbeitrag);
 	}
 
 }
