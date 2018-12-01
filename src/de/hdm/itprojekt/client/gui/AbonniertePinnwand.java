@@ -43,7 +43,6 @@ import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
-
 public class AbonniertePinnwand extends VerticalPanel {
 
 	private Label nicknameLabel = new Label();
@@ -55,14 +54,12 @@ public class AbonniertePinnwand extends VerticalPanel {
 	private TextArea beitragTb = new TextArea();
 	private Button postBt = new Button("Posten");
 	private Nutzer nutzer = new Nutzer();
-//	private Textbeitrag textbeitrag = new Textbeitrag();
+	// private Textbeitrag textbeitrag = new Textbeitrag();
 	private Textbeitrag textbeitrag = null;
 	private SingleSelectionModel<Textbeitrag> ssm = new SingleSelectionModel<Textbeitrag>();
 
-	// Create a CellList that uses the cell.
-	private CellList<Textbeitrag> cellList = new CellList<Textbeitrag>(new CellListTextbeitrag());
-	
-	//Create a CellTable
+
+	// Create a CellTable
 	private HorizontalPanel allTextbeitragCellTableContainer = new HorizontalPanel();
 	private EditTextCell editTextCell = new EditTextCell();
 	private CellTableTextbeitrag.DateColumn dateColumn = null;
@@ -71,59 +68,15 @@ public class AbonniertePinnwand extends VerticalPanel {
 	private TextCell textCell = new TextCell();
 	private CellTableTextbeitrag allTextbeitragCellTable = null;
 
-
-
-	
 	private static SocialMediaAdminAsync socialMediaVerwaltung = de.hdm.itprojekt.client.ClientsideSettings
 			.getSocialMediaVerwaltung();
-	
+
 	public AbonniertePinnwand(final int nutzerID) {
-		
+
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 
-		socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new CellListCallback());
 		socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new CellTableCallback());
 
-
-//		beitragColumn.addKeyDownHandler(new KeyDownHandler() {
-//			
-//			@Override
-//			public void onKeyDown(KeyDownEvent event) {
-//
-//					 if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-//					 if (beitragColumn.getValue(textbeitrag).equals("")){
-//					 socialMediaVerwaltung.deleteTextbeitrag(textbeitrag, new
-//					 AsyncCallback<Void>(){
-//					
-//					 @Override
-//					 public void onFailure(Throwable caught) {
-//					 // TODO Auto-generated method stub
-//					
-//					 }
-//					
-//					 @Override
-//					 public void onSuccess(Void result) {
-//					 AbonniertePinnwand abonniertePinnwand = new
-//					 AbonniertePinnwand(nutzerID);
-//					 }
-//					
-//					 });
-//					 }
-//					 }
-//					 }
-//			
-//		});
-		
-		
-		cellList.setSelectionModel(ssm);
-		ssm.addSelectionChangeHandler(new Handler() {
-
-			@Override
-			public void onSelectionChange(SelectionChangeEvent event) {
-				if(nutzerID == nutzer.getId()){
-				}
-			}
-		});
 		/**
 		 * Hat zur Folge, dass das Erstellen von Textbeiträgen nur auf der
 		 * eigenen Pinnwand möglich ist.
@@ -161,10 +114,10 @@ public class AbonniertePinnwand extends VerticalPanel {
 			public void onSuccess(Nutzer result) {
 				nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 				if (nutzer.getId() == result.getId()) {
-					nicknameLabel.setText("Du befindest dich auf deiner Pinnwand " + result.getNickname());
+					nicknameLabel.setText("Du befindest dich auf deiner Pinnwand " + result.getVorname());
 				} else {
 
-					nicknameLabel.setText("Du befindest dich auf der Pinnwand von: " + result.getNickname());
+					nicknameLabel.setText("Du befindest dich auf der Pinnwand von: " + result.getVorname());
 				}
 				nickname = result.getNickname();
 				aboID = result.getId();
@@ -176,89 +129,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 			}
 		});
 
-		/**
-		 * Alle Textbeiträge des Nutzers
-		 */
-
-
-		// socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new
-		// AsyncCallback<Vector<Textbeitrag>>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// Window.alert("Fehler beim Laden " + caught.getMessage());
-		//
-		// }
-		//
-		// @Override
-		// public void onSuccess(Vector<Textbeitrag> result) {
-		//
-		// // nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
-		// for (final Textbeitrag textbeitrag : result) {
-		//
-		// HorizontalPanel beitraege = new HorizontalPanel();
-		// final FlexTable flexTable = new FlexTable();
-		// int numRows = flexTable.getRowCount();
-		// Label erzDatumLb = new Label("" + textbeitrag.getErzeugungsdatum());
-		// final TextBox beitragTb = new TextBox();
-		// beitragTb.setText(textbeitrag.getInhalt());
-		// beitragTb.setVisibleLength(beitragTb.getText().length());
-		// beitragTb.setEnabled(false);
-		//
-		// flexTable.setWidget(numRows, 0, erzDatumLb);
-		// flexTable.setWidget(numRows, 1, beitragTb);
-		//
-		// /**
-		// * Durch diese Abfrage wird verhindert, dass die Beiträge
-		// * der abonnierten Nutzer clickable sind
-		// */
-		//
-		// if (nutzerID == nutzer.getId()) {
-		// beitragTb.setEnabled(true);
-		// // beitragTb.addClickHandler(new ClickHandler() {
-		// //
-		// // @Override
-		// // public void onClick(ClickEvent event) {
-		// // Window.alert("hier editieren DialogBox");
-		// //
-		// // }
-		// // });
-//		 beitragTb.addKeyDownHandler(new KeyDownHandler() {
-//		
-//		
-//		
-//		 @Override
-//		 public void onKeyDown(KeyDownEvent event) {
-//		 // TODO Auto-generated method stub
-//		 if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-//		 if (beitragTb.getValue().equals("")){
-//		 socialMediaVerwaltung.deleteTextbeitrag(textbeitrag, new
-//		 AsyncCallback<Void>(){
-//		
-//		 @Override
-//		 public void onFailure(Throwable caught) {
-//		 // TODO Auto-generated method stub
-//		
-//		 }
-//		
-//		 @Override
-//		 public void onSuccess(Void result) {
-//		 AbonniertePinnwand abonniertePinnwand = new
-//		 AbonniertePinnwand(nutzerID);
-//		 }
-//		
-//		 });
-//		 }
-//		 }
-//		 }
-//		 });
-//		 }
-		//
-		// beitraege.add(flexTable);
-		// mainPanel.add(beitraege);
-		// }
-		// }
-		// });
 
 		aboLoeschen.setHTML("<img src = 'images/unfollow.png'/>");
 		aboLoeschen.setPixelSize(40, 40);
@@ -283,97 +153,71 @@ public class AbonniertePinnwand extends VerticalPanel {
 		}
 		allTextbeitragCellTable = new CellTableTextbeitrag(textbeitrag);
 		dateColumn = allTextbeitragCellTable.new DateColumn(textCell);
-		
-		
-		
-		beitragColumn = allTextbeitragCellTable.new BeitragColumn(editTextCell){
-			
+		beitragColumn = allTextbeitragCellTable.new BeitragColumn(editTextCell) {
+
 			@Override
 			public void onBrowserEvent(Context context, Element elem, Textbeitrag object, NativeEvent event) {
 				// TODO Auto-generated method stub
-				super.onBrowserEvent(context, elem, object, event);
-								
-				 if(event.getKeyCode() == KeyCodes.KEY_ENTER) {
-				if (object.getInhalt()=="") {
-					socialMediaVerwaltung.deleteTextbeitrag(object, new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Fehler: " + caught.getMessage());
-						}
 
-						@Override
-						public void onSuccess(Void result) {
-							 AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(nutzerID);
+				if (nutzerID == nutzer.getId()) {
+					if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
 
-						}
-						
-					});
+						setFieldUpdater(new FieldUpdater<Textbeitrag, String>() {
+
+							@Override
+							public void update(int index, Textbeitrag object, String value) {
+								object.setInhalt(value);
+								if (value == "") {
+									socialMediaVerwaltung.deleteTextbeitrag(object, new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert("Fehler: " + caught.getMessage());
+
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(nutzerID);
+
+										}
+									});
+								}
+								socialMediaVerwaltung.saveTextbeitrag(object, new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert("Fehler: " + caught.getMessage());
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(nutzerID);
+
+									}
+
+								});
+
+							}
+
+						});
+					}
+					super.onBrowserEvent(context, elem, object, event);
+
 				}
-				 }
 			}
-			
 		};
-			
-//				 if(event.getKeyCode() == KeyCodes.KEY_ENTER) {
-//
-//				if(object.getInhalt().equals("")){
-//					 socialMediaVerwaltung.deleteTextbeitrag(textbeitrag, new
-//					 AsyncCallback<Void>(){
-//					
-//					 @Override
-//					 public void onFailure(Throwable caught) {
-//						 Window.alert("Fehler: " + caught.getMessage()); 
-//					 }
-//					
-//					 @Override
-//					 public void onSuccess(Void result) {
-//
-//					 AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(nutzerID);
-//					 }
-//					
-//					 });
-//				}
-//			}
-//				 }
-		
-//				 if(event.getKeyCode() == KeyCodes.KEY_ENTER) {
-//					 if (object.getInhalt().equals("")){
-//					 socialMediaVerwaltung.deleteTextbeitrag(textbeitrag, new
-//					 AsyncCallback<Void>(){
-//					
-//					 @Override
-//					 public void onFailure(Throwable caught) {
-//					 // TODO Auto-generated method stub
-//					
-//					 }
-//					
-//					 @Override
-//					 public void onSuccess(Void result) {
-//
-//					 AbonniertePinnwand abonniertePinnwand = new
-//					 AbonniertePinnwand(nutzerID);
-//					 }
-//					
-//					 });
-//					 }
-//					 }
-//					 }
-//				
-//			
-		
-		
+
 		allTextbeitragCellTableContainer.clear();
 		allTextbeitragCellTableContainer.add(allTextbeitragCellTable);
 		allTextbeitragCellTable.addColumn(dateColumn);
 		allTextbeitragCellTable.addColumn(beitragColumn);
-		
-		
+
 		allTextbeitragCellTableContainer.clear();
 		allTextbeitragCellTableContainer.add(allTextbeitragCellTable);
 		// vpanel.add(hpanel);
 		mainPanel.add(beitragPanel);
 		mainPanel.add(allTextbeitragCellTableContainer);
-		mainPanel.add(cellList);
 		this.add(mainPanel);
 		super.onLoad();
 		RootPanel.get("content").clear();
@@ -413,32 +257,12 @@ public class AbonniertePinnwand extends VerticalPanel {
 
 	}
 
-	class CellListCallback implements AsyncCallback<Vector<Textbeitrag>> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Fehler beim Laden " + caught.getMessage());
-
-		}
-
-		@Override
-		public void onSuccess(Vector<Textbeitrag> result) {
-			for (Textbeitrag textbeitrag : result) {
-				cellList.setRowData(0, result);
-				cellList.setRowCount(result.size(), true);
-			}
-
-			CellListTextbeitrag cellTableTextbeitrag = new CellListTextbeitrag();
-		}
-
-	}
-	
 	class CellTableCallback implements AsyncCallback<Vector<Textbeitrag>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			Window.alert("Beim Laden der Daten ist ein Fehler aufgetreten" + caught.getMessage());
-			
+
 		}
 
 		@Override
@@ -447,12 +271,12 @@ public class AbonniertePinnwand extends VerticalPanel {
 			allTextbeitragCellTable.setVisibleRangeAndClearData(range, true);
 
 			for (Textbeitrag textbeitrag : result) {
-				CellTableTextbeitrag cellTableTextbeitrag = new CellTableTextbeitrag(textbeitrag); 
+				CellTableTextbeitrag cellTableTextbeitrag = new CellTableTextbeitrag(textbeitrag);
 
 			}
 			allTextbeitragCellTable.setRowCount(result.size(), true);
 			allTextbeitragCellTable.setRowData(0, result);
 		}
-		
+
 	}
 }
