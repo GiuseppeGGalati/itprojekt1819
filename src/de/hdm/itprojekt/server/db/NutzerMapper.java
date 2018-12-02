@@ -167,7 +167,7 @@ public class NutzerMapper {
 			 */
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM `nutzer` WHERE id= ?");
 			stmt.setInt(1, nutzer.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -202,7 +202,7 @@ public class NutzerMapper {
 		Vector<Nutzer> result = new Vector<Nutzer>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `nutzer` ORDER BY `mail` ASC");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `nutzer` ORDER BY `email` ASC");
 
 			ResultSet rs = stmt.executeQuery();
 			/**

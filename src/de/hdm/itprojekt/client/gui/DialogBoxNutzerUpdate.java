@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -41,6 +42,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 
 	private Button speichern = new Button("speichern");
 	private Button abbrechen = new Button("abbrechen");
+	private Button nutzerLoeschen = new Button("Nutzer löschen");
 
 	private FlexTable ft = new FlexTable();
 
@@ -54,18 +56,20 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 
 		ft.setWidget(0, 0, updateLabel);
 		ft.setWidget(1, 0, vornameLabel);
-		ft.setWidget(1, 1, vorname);
-		ft.setWidget(2, 0, nachnameLabel);
-		ft.setWidget(2, 1, nachname);
-		ft.setWidget(3, 0, nicknameLabel);
-		ft.setWidget(3, 1, nickname);
-		ft.setWidget(4, 0, emailLabel);
-		ft.setWidget(4, 1, email);
-		ft.setWidget(5, 0, speichern);
-		ft.setWidget(5, 1, abbrechen);
+		ft.setWidget(2, 0, vorname);
+		ft.setWidget(3, 0, nachnameLabel);
+		ft.setWidget(4, 0, nachname);
+		ft.setWidget(5, 0, nicknameLabel);
+		ft.setWidget(6, 0, nickname);
+		ft.setWidget(7, 0, emailLabel);
+		ft.setWidget(8, 0, email);
+		ft.setWidget(9, 0, speichern);
+		ft.setWidget(9, 1, abbrechen);
+		ft.setWidget(9, 2, nutzerLoeschen);
 		
 		speichern.addClickHandler(new SpeichernClickhandler());
 		abbrechen.addClickHandler(new AbbrechenClickhandler());
+		nutzerLoeschen.addClickHandler(new DeleteNutzerClickHandler());
 
 		vpanel.add(ft);
 		this.add(vpanel);
@@ -145,5 +149,42 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		}
 
 	}
+	
+	public class DeleteNutzerClickHandler implements ClickHandler {
 
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			boolean deleteNutzer = Window.confirm("Möchten Sie ihren Nutzer wirklich löschen");
+			if(deleteNutzer == true){
+				Nutzer nutzer = new Nutzer();
+				nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+				nutzer.setEmail(Cookies.getCookie("email"));
+				
+				socialmediaVerwaltung.deleteNutzer(nutzer, new DeleteNutzerCallback());
+			}
+		}
+		
+	}
+	
+	public class DeleteNutzerCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			Window.alert("Fehler beim Löschen " + caught.getMessage());
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			Anchor signOutLink = new Anchor();
+			Window.alert("Nutzer wurde erfolgreich gelöscht");
+			signOutLink.setHref(Cookies.getCookie("signout"));
+			Window.open(signOutLink.getHref(), "_self", "");
+		}
+		
+		
+	}
+	
 }

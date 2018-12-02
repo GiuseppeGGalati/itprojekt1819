@@ -5,6 +5,7 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.view.client.SingleSelectionModel;
 
+import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
@@ -37,6 +38,18 @@ public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
 	}
 
 	public class BeitragColumn extends Column<Textbeitrag, String> {
+
+		public class KommentarColumn extends Column<Kommentar, String>{
+			public KommentarColumn(Cell<String> cell){
+				super(cell);
+			}
+			@Override
+			public String getValue(Kommentar object) {
+				object.setInhalt("hallo");
+				return object.getInhalt();
+			}
+
+		}
 
 		public BeitragColumn(Cell<String> cell) {
 			super(cell);

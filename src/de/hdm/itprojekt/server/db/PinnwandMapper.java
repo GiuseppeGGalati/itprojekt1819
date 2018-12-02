@@ -115,7 +115,7 @@ public class PinnwandMapper {
 		try {
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM `pinnwand` WHERE nutzerid= ?");
 			stmt.setInt(1, pinnwand.getNutzerID());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		} finally {

@@ -1,41 +1,26 @@
 package de.hdm.itprojekt.client.gui;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
-import com.google.gwt.cell.client.AbstractEditableCell;
-import com.google.gwt.cell.client.ClickableTextCell;
+import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.cell.client.ValueUpdater;
-import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
@@ -64,6 +49,7 @@ public class AbonniertePinnwand extends VerticalPanel {
 	private EditTextCell editTextCell = new EditTextCell();
 	private CellTableTextbeitrag.DateColumn dateColumn = null;
 	private CellTableTextbeitrag.BeitragColumn beitragColumn = null;
+	private CellTableTextbeitrag.BeitragColumn.KommentarColumn kommentarColumn = null;
 	private Textbeitrag tb = null;
 	private TextCell textCell = new TextCell();
 	private CellTableTextbeitrag allTextbeitragCellTable = null;
@@ -223,21 +209,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(mainPanel);
 	}
-
-	// class AbonnementLoeschenClickhandler implements ClickHandler {
-	//
-	// @Override
-	// public void onClick(ClickEvent event) {
-	// Abonnement abonnement = new Abonnement();
-	// abonnement.setId(Integer.parseInt(Cookies.getCookie("nutzerid")));
-	// Window.alert(""+ abonnement.getId());
-	// socialMediaVerwaltung.deleteAbonnement(abonnement, new
-	// AbonnementLoeschenCallback());
-	// }
-	//
-	// }
-
-
 
 	class CellTableCallback implements AsyncCallback<Vector<Textbeitrag>> {
 
