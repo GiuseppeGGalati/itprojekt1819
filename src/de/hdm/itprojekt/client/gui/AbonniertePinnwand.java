@@ -74,8 +74,11 @@ public class AbonniertePinnwand extends VerticalPanel {
 	public AbonniertePinnwand(final int nutzerID) {
 
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+		
+		socialMediaVerwaltung.findAbonnementByNutzerID(nutzerID, new FindAboCallback());
 
 		socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new CellTableCallback());
+		
 
 		/**
 		 * Hat zur Folge, dass das Erstellen von Textbeiträgen nur auf der
@@ -139,18 +142,15 @@ public class AbonniertePinnwand extends VerticalPanel {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					Abonnement abonnement = new Abonnement();
-					abonnement.setNutzerID(nutzer.getId());
-					abonnement.setPinnwandID(aboID);
-
-					Window.alert("msg" + nutzer.getId());
-					Window.alert("" + abonnement.getId());
-					socialMediaVerwaltung.deleteAbonnement(abonnement, new AbonnementLoeschenCallback());
+					socialMediaVerwaltung.deleteAbonnement(nutzer.getId(), nutzerID, new AbonnementLoeschenCallback());
+					Window.alert("" + nutzer.getId()+ " " + nutzerID);
 				}
+				
 			});
-
 			mainPanel.add(aboLoeschen);
+
 		}
+
 		allTextbeitragCellTable = new CellTableTextbeitrag(textbeitrag);
 		dateColumn = allTextbeitragCellTable.new DateColumn(textCell);
 		beitragColumn = allTextbeitragCellTable.new BeitragColumn(editTextCell) {
@@ -237,25 +237,7 @@ public class AbonniertePinnwand extends VerticalPanel {
 	//
 	// }
 
-	class AbonnementLoeschenCallback implements AsyncCallback<Void> {
 
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Fehler beim Laden " + caught.getMessage());
-
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			Window.alert("User entfolgt");
-			RootPanel.get("content").clear();
-			RootPanel.get("leftmenutree").clear();
-			RootPanel.get("leftmenutree").add(new Toolbar());
-			RootPanel.get("leftmenutree").add(new AllAbonnementView());
-
-		}
-
-	}
 
 	class CellTableCallback implements AsyncCallback<Vector<Textbeitrag>> {
 
@@ -276,6 +258,46 @@ public class AbonniertePinnwand extends VerticalPanel {
 			}
 			allTextbeitragCellTable.setRowCount(result.size(), true);
 			allTextbeitragCellTable.setRowData(0, result);
+		}
+
+	}
+	
+	class FindAboCallback implements AsyncCallback<Vector<Abonnement>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Beim Laden der Daten ist ein Fehler aufgetreten" + caught.getMessage());
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<Abonnement> result) {
+			
+			for (Abonnement abonnement : result) {
+				Window.alert("nutzerid: "+ abonnement.getNutzerID() + " pinnwandid: " + abonnement.getPinnwandID() + " aboid: " + abonnement.getId());
+			}
+		}
+		
+	}
+	
+	class AbonnementLoeschenCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Fehler beim Laden " + caught.getMessage());
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			
+			Window.alert("" + nutzer.getEmail());
+			Window.alert("User entfolgt");
+			RootPanel.get("content").clear();
+			RootPanel.get("leftmenutree").clear();
+			RootPanel.get("leftmenutree").add(new Toolbar());
+			RootPanel.get("leftmenutree").add(new AllAbonnementView());
+
 		}
 
 	}

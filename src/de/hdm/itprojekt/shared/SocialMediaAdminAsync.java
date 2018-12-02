@@ -42,7 +42,7 @@ public interface SocialMediaAdminAsync {
 
 	void findTextbeitragByNutzerID(int nutzerID, AsyncCallback<Vector<Textbeitrag>> callback);
 
-	void deleteAbonnement(Abonnement abonnement, AsyncCallback<Void> callback);
+	void deleteAbonnement(int nutzerID, int pinnwandID, AsyncCallback<Void> callback);
 
 	void createTextbeitrag(int nutzerID, String inhalt, AsyncCallback<Textbeitrag> callback);
 

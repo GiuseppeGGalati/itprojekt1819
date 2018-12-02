@@ -47,11 +47,12 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) throws IllegalArgumentException;
 
-	void deleteAbonnement(Abonnement abonnement) throws IllegalArgumentException;
+	void deleteAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException;
 
 	void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
 
 	void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
+
 
 
 }

@@ -215,10 +215,15 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
-	public void deleteAbonnement(Abonnement abonnement) throws IllegalArgumentException {
-		abonnement.setNutzerID(abonnement.getNutzerID());
-		abonnement.setPinnwandID(abonnement.getPinnwandID());
-		this.abonnementMapper.deleteAbonnement(abonnement);
+	public void deleteAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException {
+		Nutzer n = findNutzerByID(nutzerID);
+//		Pinnwand p = findPinnwandByNutzerID(n.getId());
+		Abonnement abo = new Abonnement();
+		abo.setNutzerID(nutzerID);
+		abo.setPinnwandID(pinnwandID);
+
+		this.abonnementMapper.deleteAbonnement(abo);
+		
 	}
 
 	@Override

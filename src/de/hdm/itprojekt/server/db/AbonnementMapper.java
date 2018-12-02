@@ -96,7 +96,7 @@ public class AbonnementMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("DELETE * FROM `abonnement` WHERE nutzerid=? AND pinnwandid=?");
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM abonnement WHERE nutzerid=? AND pinnwandid=?");
 
 			stmt.setInt(1, abonnement.getNutzerID());
 			stmt.setInt(2, abonnement.getPinnwandID());
