@@ -12,6 +12,7 @@ import de.hdm.itprojekt.server.db.PinnwandMapper;
 import de.hdm.itprojekt.server.db.TextbeitragMapper;
 import de.hdm.itprojekt.shared.SocialMediaAdmin;
 import de.hdm.itprojekt.shared.bo.Abonnement;
+import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Pinnwand;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
@@ -168,23 +169,28 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	// return n;
 	// }
 	@Override
-	public Nutzer findNutzerByID(int nutzerID) {
+	public Nutzer findNutzerByID(int nutzerID) throws IllegalArgumentException{
 		return this.nutzerMapper.findNutzerById(nutzerID);
 	}
 
 	@Override
-	public Pinnwand findPinnwandByNutzerID(int nutzerID) {
+	public Pinnwand findPinnwandByNutzerID(int nutzerID) throws IllegalArgumentException{
 		return this.pinnwandMapper.findPinnwandByNutzerId(nutzerID);
 	}
 
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) {
+	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) throws IllegalArgumentException{
 		return this.textbeitragMapper.findTextbeitragByPinnwandId(pinnwandID);
 	}
 
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) {
+	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) throws IllegalArgumentException{
 		return this.textbeitragMapper.findTextbeitragByNutzerId(nutzerID);
+	}
+	
+	@Override
+	public Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException{
+		return this.kommentarMapper.findKommentarByTextbeitragId(textbeitragID);
 	}
 
 	@Override
@@ -196,6 +202,17 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		textbeitrag.setErzeugungsdatum(new Date());
 		textbeitrag.setModifikationsdatum(new Date());
 		return this.textbeitragMapper.createTextbeitrag(textbeitrag);
+	}
+	
+	@Override
+	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException{
+		Kommentar kommentar = new Kommentar();
+		kommentar.setTextbeitragID(textbeitragID);
+		kommentar.setNutzerID(nutzerID);
+		kommentar.setInhalt(inhalt);
+		kommentar.setErzeugungsdatum(new Date());
+		kommentar.setModifikationsdatum(new Date());
+		return this.kommentarMapper.createKommentar(kommentar);
 	}
 
 	@Override
@@ -231,6 +248,11 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		this.textbeitragMapper.deleteTextbeitrag(textbeitrag);
 
 	}
+	
+	@Override
+	public void deleteKommentar(Kommentar kommentar) throws IllegalArgumentException{
+		this.kommentarMapper.deleteKommentar(kommentar);
+	}
 
 	@Override
 	public void saveNutzer(Nutzer nutzer) throws IllegalArgumentException {
@@ -241,6 +263,12 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	public void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException {
 		textbeitrag.setModifikationsdatum(new Date());
 		textbeitragMapper.updateTextbeitrag(textbeitrag);
+	}
+	
+	@Override
+	public void saveKommentar(Kommentar kommentar) throws IllegalArgumentException{
+		kommentar.setModifikationsdatum(new Date());
+		kommentarMapper.updateKommentar(kommentar);
 	}
 
 }

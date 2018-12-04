@@ -49,7 +49,7 @@ public class AbonniertePinnwand extends VerticalPanel {
 	private EditTextCell editTextCell = new EditTextCell();
 	private CellTableTextbeitrag.DateColumn dateColumn = null;
 	private CellTableTextbeitrag.BeitragColumn beitragColumn = null;
-	private CellTableTextbeitrag.BeitragColumn.KommentarColumn kommentarColumn = null;
+	private CellTableTextbeitrag.KommentarColumn kommentarColumn = null;
 	private Textbeitrag tb = null;
 	private TextCell textCell = new TextCell();
 	private CellTableTextbeitrag allTextbeitragCellTable = null;

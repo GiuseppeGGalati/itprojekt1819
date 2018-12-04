@@ -73,7 +73,6 @@ public class TextbeitragMapper {
 		java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(textbeitrag.getModifikationsdatum().getTime());
 
 		Connection con = DBConnection.connection();
-//		java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(textbeitrag.getModifikationsdatum().getTime());
 
 		try {
 			PreparedStatement stmt1 = con.prepareStatement(sql);

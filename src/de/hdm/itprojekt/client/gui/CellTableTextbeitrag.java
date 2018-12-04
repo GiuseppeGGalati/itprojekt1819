@@ -10,6 +10,8 @@ import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
 
+
+
 	private final SingleSelectionModel<Textbeitrag> ssm = new SingleSelectionModel<Textbeitrag>();
 
 	public CellTableTextbeitrag(Textbeitrag textbeitrag) {
@@ -39,17 +41,6 @@ public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
 
 	public class BeitragColumn extends Column<Textbeitrag, String> {
 
-		public class KommentarColumn extends Column<Kommentar, String>{
-			public KommentarColumn(Cell<String> cell){
-				super(cell);
-			}
-			@Override
-			public String getValue(Kommentar object) {
-				object.setInhalt("hallo");
-				return object.getInhalt();
-			}
-
-		}
 
 		public BeitragColumn(Cell<String> cell) {
 			super(cell);
@@ -57,6 +48,20 @@ public class CellTableTextbeitrag extends CellTable<Textbeitrag> {
 
 		@Override
 		public String getValue(Textbeitrag object) {
+			return object.getInhalt();
+		}
+
+	}
+	
+	public class KommentarColumn extends Column<Kommentar, String>{
+
+		public KommentarColumn(Cell<String> cell) {
+			super(cell);
+		}
+
+		@Override
+		public String getValue(Kommentar object) {
+			// TODO Auto-generated method stub
 			return object.getInhalt();
 		}
 

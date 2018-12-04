@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.itprojekt.shared.bo.Abonnement;
+import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Pinnwand;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
@@ -49,6 +50,14 @@ public interface SocialMediaAdminAsync {
 	void deleteTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
 
 	void saveTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
+
+	void createKommentar(int textbeitragID, int nutzerID, String inhalt, AsyncCallback<Kommentar> callback);
+
+	void findKommentarByTextbeitragId(int textbeitragID, AsyncCallback<Vector<Kommentar>> callback);
+
+	void deleteKommentar(Kommentar kommentar, AsyncCallback<Void> callback);
+
+	void saveKommentar(Kommentar kommentar, AsyncCallback<Void> callback);
 
 
 }

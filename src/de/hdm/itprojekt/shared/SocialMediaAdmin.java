@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.itprojekt.shared.bo.Abonnement;
+import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Pinnwand;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
@@ -52,6 +53,14 @@ public interface SocialMediaAdmin extends RemoteService{
 	void deleteTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
 
 	void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
+
+	Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException;
+
+	Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException;
+
+	void deleteKommentar(Kommentar kommentar) throws IllegalArgumentException;
+
+	void saveKommentar(Kommentar kommentar) throws IllegalArgumentException;
 
 
 

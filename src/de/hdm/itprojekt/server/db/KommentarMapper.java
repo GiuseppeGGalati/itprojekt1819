@@ -34,7 +34,6 @@ public class KommentarMapper {
 
 		Connection con = DBConnection.connection();
 		java.sql.Timestamp sqlDate = new java.sql.Timestamp(kommentar.getErzeugungsdatum().getTime());
-		java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(kommentar.getModifikationsdatum().getTime());
 
 		try {
 			Statement stmt = con.createStatement();
@@ -43,7 +42,7 @@ public class KommentarMapper {
 
 			if (rs.next()) {
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum, modifikationsdatum) VALUES(?, ?, ?, ?, ?, ?) ",
+						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum) VALUES(?, ?, ?, ?, ?) ",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, kommentar.getId());
@@ -51,7 +50,6 @@ public class KommentarMapper {
 				stmt1.setInt(3, kommentar.getNutzerID());
 				stmt1.setString(4, kommentar.getInhalt());
 				stmt1.setTimestamp(5, sqlDate);
-				stmt1.setTimestamp(6, sqlDate1);
 
 				System.out.println(stmt);
 				stmt1.executeUpdate();
@@ -70,22 +68,18 @@ public class KommentarMapper {
 	}
 
 	public Kommentar updateKommentar(Kommentar kommentar) {
-
-		Connection con = DBConnection.connection();
-		java.sql.Timestamp sqlDate = new java.sql.Timestamp(kommentar.getErzeugungsdatum().getTime());
+		String sql = "UPDATE kommentar SET inhalt=?, modifikationsdatum=? WHERE id=?";
 		java.sql.Timestamp sqlDate1 = new java.sql.Timestamp(kommentar.getModifikationsdatum().getTime());
 
-		try {
-			PreparedStatement stmt1 = con
-					.prepareStatement("UPDATE FROM `kommentar` SET `id`= ?, `textbeitragid`= ?, `nutzerid`= ?,"
-							+ "`inhalt`= ?. `erzeugungsdatum`= ?, `modifikationsdatum`= ? WHERE id= ? ");
+		Connection con = DBConnection.connection();
 
-			stmt1.setInt(1, kommentar.getId());
-			stmt1.setInt(2, kommentar.getTextbeitragID());
-			stmt1.setInt(3, kommentar.getNutzerID());
-			stmt1.setString(4, kommentar.getInhalt());
-			stmt1.setTimestamp(5, sqlDate);
-			stmt1.setTimestamp(6, sqlDate1);
+		try {
+			PreparedStatement stmt1 = con.prepareStatement(sql);
+					
+			stmt1.setString(1, kommentar.getInhalt());
+			stmt1.setTimestamp(2, sqlDate1);
+			stmt1.setInt(3, kommentar.getId());
+
 			stmt1.executeUpdate();
 			System.out.println("Updated");
 
@@ -103,13 +97,13 @@ public class KommentarMapper {
 
 	}
 
-	public void deleteKommentat(Kommentar kommentar) {
+	public void deleteKommentar(Kommentar kommentar) {
 		Connection con = DBConnection.connection();
 
 		try {
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM `kommentar` WHERE id= ?");
 			stmt.setInt(1, kommentar.getId());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -186,14 +180,15 @@ public class KommentarMapper {
 
 	}
 
-	public Kommentar findKommentarByTextbeitragId(int textbeitragID) {
+	public Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) {
 
 		Connection con = DBConnection.connection();
 
-		Kommentar k = new Kommentar();
+		Vector<Kommentar> result = new Vector<Kommentar>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `kommentar` WHERE `textbeitragid`= ?");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `kommentar` WHERE `textbeitragid`= ?"
+					+ " ORDER BY id DESC");
 
 			stmt.setInt(1, textbeitragID);
 			ResultSet rs = stmt.executeQuery();
@@ -201,28 +196,20 @@ public class KommentarMapper {
 			while (rs.next()) {
 
 				Kommentar kommentar = new Kommentar();
+				
 				kommentar.setId(rs.getInt("id"));
 				kommentar.setTextbeitragID(rs.getInt("textbeitragid"));
 				kommentar.setNutzerID(rs.getInt("nutzerid"));
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
-
-				k = kommentar;
-
+				
+				result.addElement(kommentar);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-		} finally {
-			if (con != null)
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 		}
-		return k;
-
+		return result;
 	}
 
 }
