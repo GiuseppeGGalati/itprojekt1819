@@ -62,6 +62,8 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	void saveKommentar(Kommentar kommentar) throws IllegalArgumentException;
 
+	Vector<Nutzer> findAllNutzer() throws IllegalArgumentException;
+
 
 
 }

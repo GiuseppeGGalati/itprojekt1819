@@ -136,6 +136,11 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
+	public Vector<Nutzer> findAllNutzer() throws IllegalArgumentException{
+		return this.nutzerMapper.findAllNutzer();
+		}
+	
+	@Override
 	public Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException {
 
 		Vector<Abonnement> aboVector = findAbonnementByNutzerID(nutzerID);

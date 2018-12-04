@@ -59,5 +59,7 @@ public interface SocialMediaAdminAsync {
 
 	void saveKommentar(Kommentar kommentar, AsyncCallback<Void> callback);
 
+	void findAllNutzer(AsyncCallback<Vector<Nutzer>> callback);
+
 
 }

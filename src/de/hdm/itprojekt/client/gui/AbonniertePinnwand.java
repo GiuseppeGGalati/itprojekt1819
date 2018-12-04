@@ -25,6 +25,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Abonnement;
+import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
@@ -47,9 +48,10 @@ public class AbonniertePinnwand extends VerticalPanel {
 	// Create a CellTable
 	private HorizontalPanel allTextbeitragCellTableContainer = new HorizontalPanel();
 	private EditTextCell editTextCell = new EditTextCell();
+//	private EditTextCell editTextCellKommentar = new EditTextCell();
 	private CellTableTextbeitrag.DateColumn dateColumn = null;
 	private CellTableTextbeitrag.BeitragColumn beitragColumn = null;
-	private CellTableTextbeitrag.KommentarColumn kommentarColumn = null;
+//	private CellTableTextbeitrag.KommentarColumn kommentarColumn = null;
 	private Textbeitrag tb = null;
 	private TextCell textCell = new TextCell();
 	private CellTableTextbeitrag allTextbeitragCellTable = null;
@@ -60,10 +62,13 @@ public class AbonniertePinnwand extends VerticalPanel {
 	public AbonniertePinnwand(final int nutzerID) {
 
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+//		textbeitrag.setId(Integer.parseInt(Cookies.getCookie("id")));
 		
 		socialMediaVerwaltung.findAbonnementByNutzerID(nutzerID, new FindAboCallback());
 
 		socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new CellTableCallback());
+		
+//		socialMediaVerwaltung.findKommentarByTextbeitragId(textbeitrag.getId(), new CellTableKommentarCallback());
 		
 
 		/**
@@ -179,7 +184,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 									@Override
 									public void onSuccess(Void result) {
 										AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(nutzerID);
-
 									}
 
 								});
@@ -193,12 +197,16 @@ public class AbonniertePinnwand extends VerticalPanel {
 				}
 			}
 		};
+		
+//		kommentarColumn = allTextbeitragCellTable.new KommentarColumn() {
+//			
+//		};
 
 		allTextbeitragCellTableContainer.clear();
 		allTextbeitragCellTableContainer.add(allTextbeitragCellTable);
 		allTextbeitragCellTable.addColumn(dateColumn);
 		allTextbeitragCellTable.addColumn(beitragColumn);
-
+//		allTextbeitragCellTable.addColumn(kommentarColumn);
 		allTextbeitragCellTableContainer.clear();
 		allTextbeitragCellTableContainer.add(allTextbeitragCellTable);
 		// vpanel.add(hpanel);
@@ -209,6 +217,27 @@ public class AbonniertePinnwand extends VerticalPanel {
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(mainPanel);
 	}
+	
+//	class CellTableKommentarCallback implements AsyncCallback<Vector<Kommentar>>{
+//
+//		@Override
+//		public void onFailure(Throwable caught) {
+//			Window.alert("Beim Laden der Daten ist ein Fehler aufgetreten" + caught.getMessage());
+//			
+//		}
+//
+//		@Override
+//		public void onSuccess(Vector<Kommentar> result) {
+//			Range range = new Range(0, result.size());
+//			allTextbeitragCellTable.setVisibleRangeAndClearData(range, true);
+//			
+//			for (Kommentar kommentar : result) {
+//				CellTableTextbeitrag cellTableTextbeitrag = new CellTableTextbeitrag(textbeitrag);
+//			}
+//
+//		}
+//		
+//	}
 
 	class CellTableCallback implements AsyncCallback<Vector<Textbeitrag>> {
 
