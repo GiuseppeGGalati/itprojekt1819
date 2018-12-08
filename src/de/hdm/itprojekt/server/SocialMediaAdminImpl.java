@@ -3,6 +3,8 @@ package de.hdm.itprojekt.server;
 import java.util.Date;
 import java.util.Vector;
 
+import com.google.appengine.api.utils.SystemProperty.Environment.Value;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.server.db.AbonnementMapper;
@@ -162,17 +164,13 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 		return nutzerVector;
 	}
+	
+	@Override
+	public Vector<Nutzer> findAllNutzerByID() throws IllegalArgumentException{
 
-	// public Vector<Nutzer> findNutzerByAbonnement(Abonnement abo) throws
-	// IllegalArgumentException{
-	//
-	//// Vector <Abonnement> = findAbonnementByNutzerID(nutzerID)
-	//// findAllPinnwand()
-	//// Vector <Pinnwand>
-	//
-	// Nutzer n = this.findNutzerByID(abo.getNutzerID());
-	// return n;
-	// }
+		return this.nutzerMapper.findAllNutzerById();
+	}
+	
 	@Override
 	public Nutzer findNutzerByID(int nutzerID) throws IllegalArgumentException{
 		return this.nutzerMapper.findNutzerById(nutzerID);

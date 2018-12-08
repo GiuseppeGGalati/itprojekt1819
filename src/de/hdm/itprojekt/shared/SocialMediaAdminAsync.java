@@ -61,5 +61,7 @@ public interface SocialMediaAdminAsync {
 
 	void findAllNutzer(AsyncCallback<Vector<Nutzer>> callback);
 
+	void findAllNutzerByID(AsyncCallback<Vector<Nutzer>> callback);
+
 
 }
