@@ -116,12 +116,52 @@ public class AbonnementMapper {
 
 	}
 
-	public Vector <Abonnement> findAbonnementByNutzerID(int nutzerID) {
+	public Abonnement findAllAbonnement(int nutzerID, int pinnwandID) {
 
 		Connection con = DBConnection.connection();
 
-		
-		Vector <Abonnement> a = new Vector <Abonnement>();
+		Abonnement a = new Abonnement();
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT * FROM `abonnement` WHERE `nutzerid`=? AND `pinnwandid`=?");
+			stmt.setInt(1, nutzerID);
+			stmt.setInt(2, pinnwandID);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Abonnement abonnement = new Abonnement();
+
+				abonnement.setId(rs.getInt("id"));
+				abonnement.setNutzerID(rs.getInt("nutzerid"));
+				abonnement.setPinnwandID(rs.getInt("pinnwandid"));
+
+				a = abonnement;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+
+		/**
+		 * Ergebnisvektor zurückgeben
+		 */
+		finally {
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		return a;
+
+	}
+
+	public Vector<Abonnement> findAbonnementByNutzerID(int nutzerID) {
+
+		Connection con = DBConnection.connection();
+
+		Vector<Abonnement> a = new Vector<Abonnement>();
 
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `abonnement` WHERE `nutzerid`=?");
@@ -155,7 +195,5 @@ public class AbonnementMapper {
 		return a;
 
 	}
-	
-	
 
 }

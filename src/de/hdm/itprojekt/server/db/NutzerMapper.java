@@ -74,7 +74,7 @@ public class NutzerMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM nutzer");
 			if (rs.next()) {
-				nutzer.setId(rs.getInt("maxid")+1);
+				nutzer.setId(rs.getInt("maxid") + 1);
 
 				/**
 				 * Druchführen der Einfüge Operation via Prepared Statement
@@ -342,7 +342,7 @@ public class NutzerMapper {
 
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `nutzer`");
-//			stmt.setInt(1, nutzerID);
+			// stmt.setInt(1, nutzerID);
 			ResultSet rs = stmt.executeQuery();
 
 			/**
@@ -364,7 +364,6 @@ public class NutzerMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 
 		return result;
 

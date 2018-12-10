@@ -108,7 +108,6 @@ public class Itprojekt1819 implements EntryPoint {
 	 */
 	private void loadPinnwand() {
 
-
 		StartseiteForm startseiteform = new StartseiteForm();
 		Toolbar toolbar = new Toolbar();
 		AllAbonnementView apv = new AllAbonnementView();

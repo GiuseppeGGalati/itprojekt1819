@@ -115,6 +115,23 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
+	public Abonnement createAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException {
+		Abonnement abonnement = new Abonnement();
+		abonnement.setNutzerID(nutzerID);
+		abonnement.setPinnwandID(pinnwandID);
+
+		Abonnement abo = new Abonnement();
+		abo = this.abonnementMapper.findAllAbonnement(nutzerID, pinnwandID);
+
+		if (abo.getId() != 0) {
+
+			System.out.println("Sie folgen diesem Nutzer bereits.");
+			return null;
+		}
+		return this.abonnementMapper.createAbonnement(abonnement);
+	}
+
+	@Override
 	public Nutzer checkEmail(String email) throws IllegalArgumentException {
 		Nutzer nutzer = new Nutzer();
 		nutzer = this.nutzerMapper.findNutzerByEmail(email);
@@ -133,15 +150,20 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
+	public Abonnement findAllAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException {
+		return this.abonnementMapper.findAllAbonnement(nutzerID, pinnwandID);
+	}
+
+	@Override
 	public Vector<Pinnwand> findAllPinnwand() throws IllegalArgumentException {
 		return this.pinnwandMapper.findAllPinnwand();
 	}
 
 	@Override
-	public Vector<Nutzer> findAllNutzer() throws IllegalArgumentException{
+	public Vector<Nutzer> findAllNutzer() throws IllegalArgumentException {
 		return this.nutzerMapper.findAllNutzer();
-		}
-	
+	}
+
 	@Override
 	public Vector<Nutzer> findNutzerByAbo(int nutzerID) throws IllegalArgumentException {
 
@@ -164,35 +186,35 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 		return nutzerVector;
 	}
-	
+
 	@Override
-	public Vector<Nutzer> findAllNutzerByID() throws IllegalArgumentException{
+	public Vector<Nutzer> findAllNutzerByID() throws IllegalArgumentException {
 
 		return this.nutzerMapper.findAllNutzerById();
 	}
-	
+
 	@Override
-	public Nutzer findNutzerByID(int nutzerID) throws IllegalArgumentException{
+	public Nutzer findNutzerByID(int nutzerID) throws IllegalArgumentException {
 		return this.nutzerMapper.findNutzerById(nutzerID);
 	}
 
 	@Override
-	public Pinnwand findPinnwandByNutzerID(int nutzerID) throws IllegalArgumentException{
+	public Pinnwand findPinnwandByNutzerID(int nutzerID) throws IllegalArgumentException {
 		return this.pinnwandMapper.findPinnwandByNutzerId(nutzerID);
 	}
 
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) throws IllegalArgumentException{
+	public Vector<Textbeitrag> findTextbeitragByPinnwandID(int pinnwandID) throws IllegalArgumentException {
 		return this.textbeitragMapper.findTextbeitragByPinnwandId(pinnwandID);
 	}
 
 	@Override
-	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) throws IllegalArgumentException{
+	public Vector<Textbeitrag> findTextbeitragByNutzerID(int nutzerID) throws IllegalArgumentException {
 		return this.textbeitragMapper.findTextbeitragByNutzerId(nutzerID);
 	}
-	
+
 	@Override
-	public Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException{
+	public Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException {
 		return this.kommentarMapper.findKommentarByTextbeitragId(textbeitragID);
 	}
 
@@ -206,9 +228,9 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		textbeitrag.setModifikationsdatum(new Date());
 		return this.textbeitragMapper.createTextbeitrag(textbeitrag);
 	}
-	
+
 	@Override
-	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException{
+	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException {
 		Kommentar kommentar = new Kommentar();
 		kommentar.setTextbeitragID(textbeitragID);
 		kommentar.setNutzerID(nutzerID);
@@ -237,13 +259,13 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	@Override
 	public void deleteAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException {
 		Nutzer n = findNutzerByID(nutzerID);
-//		Pinnwand p = findPinnwandByNutzerID(n.getId());
+		// Pinnwand p = findPinnwandByNutzerID(n.getId());
 		Abonnement abo = new Abonnement();
 		abo.setNutzerID(nutzerID);
 		abo.setPinnwandID(pinnwandID);
 
 		this.abonnementMapper.deleteAbonnement(abo);
-		
+
 	}
 
 	@Override
@@ -251,9 +273,9 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		this.textbeitragMapper.deleteTextbeitrag(textbeitrag);
 
 	}
-	
+
 	@Override
-	public void deleteKommentar(Kommentar kommentar) throws IllegalArgumentException{
+	public void deleteKommentar(Kommentar kommentar) throws IllegalArgumentException {
 		this.kommentarMapper.deleteKommentar(kommentar);
 	}
 
@@ -267,9 +289,9 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		textbeitrag.setModifikationsdatum(new Date());
 		textbeitragMapper.updateTextbeitrag(textbeitrag);
 	}
-	
+
 	@Override
-	public void saveKommentar(Kommentar kommentar) throws IllegalArgumentException{
+	public void saveKommentar(Kommentar kommentar) throws IllegalArgumentException {
 		kommentar.setModifikationsdatum(new Date());
 		kommentarMapper.updateKommentar(kommentar);
 	}

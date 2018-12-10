@@ -13,13 +13,13 @@ import de.hdm.itprojekt.shared.bo.Nutzer;
  *
  */
 public class CellListAbonnement extends AbstractCell<Nutzer> {
-	
+
 	@Override
 	public void render(com.google.gwt.cell.client.Cell.Context context, Nutzer value, SafeHtmlBuilder sb) {
 		// TODO Auto-generated method stub
-	      if (value == null) {
-        return;
+		if (value == null) {
+			return;
+		}
+		sb.appendEscaped(value.getNickname());
 	}
-	      sb.appendEscaped(value.getNickname());
-	    }
 }

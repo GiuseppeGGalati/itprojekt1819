@@ -36,7 +36,7 @@ public class PinnwandMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM pinnwand");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM pinnwand");
 			if (rs.next()) {
 
 				PreparedStatement stmt1 = con.prepareStatement("INSERT INTO pinnwand(id, nutzerid) VALUES (?, ?) ",

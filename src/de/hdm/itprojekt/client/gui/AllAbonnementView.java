@@ -1,7 +1,8 @@
 package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
-
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
@@ -27,34 +28,31 @@ public class AllAbonnementView extends LeftSideFrame {
 	private VerticalPanel vpanel = new VerticalPanel();
 	private SingleSelectionModel<Nutzer> ssm = new SingleSelectionModel<Nutzer>();
 	private Nutzer nutzer = new Nutzer();
-	
 
 	// Create a CellList that uses the cell.
 	private CellList<Nutzer> cellList = new CellList<Nutzer>(new CellListAbonnement());
 
-	public AllAbonnementView() {		
-		
-	nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
-	socialmediaVerwaltung.findNutzerByAbo(nutzer.getId(), new CellListCallback());
+	public AllAbonnementView() {
 
-	cellList.setSelectionModel(ssm);
-	ssm.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+		socialmediaVerwaltung.findNutzerByAbo(nutzer.getId(), new CellListCallback());
 
-		@Override
-		public void onSelectionChange(SelectionChangeEvent event) {
+		cellList.setSelectionModel(ssm);
+		ssm.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
-			if (ssm.getSelectedObject().getNickname() != null){
-			AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+
+				if (ssm.getSelectedObject().getNickname() != null) {
+					AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
+				} else {
+					// StartseiteForm startseiteForm = new
+					// StartseiteForm(ssm.getSelectedObject());
+					StartseiteForm startseiteForm = new StartseiteForm();
+				}
+
 			}
-			else{
-//			StartseiteForm startseiteForm = new StartseiteForm(ssm.getSelectedObject());
-			StartseiteForm startseiteForm = new StartseiteForm();
-			}
-
-
-			}
-	});
-
+		});
 
 		vpanel.add(cellList);
 		this.add(vpanel);
@@ -79,32 +77,4 @@ public class AllAbonnementView extends LeftSideFrame {
 
 		}
 	}
-
-	// class MeinePinnwandCellListCallback implements AsyncCallback<Nutzer>{
-	//
-	// @Override
-	// public void onFailure(Throwable caught) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void onSuccess(Nutzer result) {
-	//
-	// nutzerVector.add(result);
-	// }
-	// }
-	//
-	// class meinePinnwandClickHandler implements ClickHandler {
-	//
-	// @Override
-	// public void onClick(ClickEvent event) {
-	// StartseiteForm startseiteForm = new StartseiteForm(nutzer);
-	// Window.alert("funktioniert");
-	// RootPanel.get("content").clear();
-	// RootPanel.get("content").add(startseiteForm);
-	//
-	// }
-	//
-	// }
 }

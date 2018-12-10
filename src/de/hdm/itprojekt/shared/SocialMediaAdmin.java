@@ -13,14 +13,15 @@ import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 @RemoteServiceRelativePath("socialmedia")
 
-public interface SocialMediaAdmin extends RemoteService{
+public interface SocialMediaAdmin extends RemoteService {
 
 	void init() throws IllegalArgumentException;
-	
+
 	public Nutzer createNutzer(String email) throws IllegalArgumentException;
-	
-	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname) throws IllegalArgumentException;
-	
+
+	public Nutzer createNutzer(String email, String vorname, String nachname, String nickname)
+			throws IllegalArgumentException;
+
 	public Nutzer checkEmail(String email) throws IllegalArgumentException;
 
 	Vector<Abonnement> findAbonnementByNutzerID(int nutzerID) throws IllegalArgumentException;
@@ -65,6 +66,8 @@ public interface SocialMediaAdmin extends RemoteService{
 
 	Vector<Nutzer> findAllNutzerByID() throws IllegalArgumentException;
 
+	Abonnement createAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException;
 
+	Abonnement findAllAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException;
 
 }

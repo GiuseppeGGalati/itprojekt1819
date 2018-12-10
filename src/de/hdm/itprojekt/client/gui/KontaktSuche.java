@@ -7,6 +7,7 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -17,9 +18,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.client.ClientsideSettings;
+import de.hdm.itprojekt.client.Itprojekt1819;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
+import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
 
 public class KontaktSuche extends VerticalPanel {
@@ -35,13 +40,14 @@ public class KontaktSuche extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private FlexTable ft = new FlexTable();
 	private Label lb1 = new Label("Wen suchen Sie?");
-	private Button abonnieren = new Button("Abonnieren");
+	private Button abonnieren = new Button("Suchen");
 	private Button abbrechen = new Button("Zur Startseite");
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	final SuggestBox suggestBox = new SuggestBox(oracle);
+	private Nutzer nutzer = new Nutzer();
 
 	private ClickableTextCell tCell = new ClickableTextCell();
-	private MultiSelectionModel<Nutzer> msm = new MultiSelectionModel<Nutzer>();
+	private SingleSelectionModel<Nutzer> ssm = new SingleSelectionModel<Nutzer>();
 	private CellTableNutzer nutzerCt = new CellTableNutzer();
 	private CellTableNutzer.VornameColumn vornameColumn = nutzerCt.new VornameColumn(tCell);
 	private CellTableNutzer.NachnameColumn nachnameColumn = nutzerCt.new NachnameColumn(tCell);
@@ -51,6 +57,9 @@ public class KontaktSuche extends VerticalPanel {
 	private Vector<Nutzer> resultNutzer = new Vector<Nutzer>();
 
 	public KontaktSuche() {
+
+		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
+
 		abbrechen.addClickHandler(new AbbrechenClickHandler());
 
 		socialmediaVerwaltung.findAllNutzer(new AsyncCallback<Vector<Nutzer>>() {
@@ -72,8 +81,17 @@ public class KontaktSuche extends VerticalPanel {
 		});
 
 		abonnieren.addClickHandler(new AbonnierenClickHandler());
-		
-		nutzerCt.setSelectionModel(msm);
+		ssm.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+			@Override
+			public void onSelectionChange(SelectionChangeEvent event) {
+				socialmediaVerwaltung.createAbonnement(nutzer.getId(), ssm.getSelectedObject().getId(),
+						new CreateAboCallback());
+			}
+
+		});
+
+		nutzerCt.setSelectionModel(ssm);
 		nutzerCt.addColumn(vornameColumn);
 		nutzerCt.addColumn(nachnameColumn);
 		nutzerCt.addColumn(nicknameColumn);
@@ -97,7 +115,6 @@ public class KontaktSuche extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			final String searchItem = suggestBox.getValue();
-			
 
 			socialmediaVerwaltung.findAllNutzer(new AsyncCallback<Vector<Nutzer>>() {
 
@@ -162,21 +179,40 @@ public class KontaktSuche extends VerticalPanel {
 		@Override
 		public void onSuccess(Vector<Nutzer> result) {
 			result = resultNutzer;
-			
+
 			nutzerCt.setRowCount(resultNutzer.size(), true);
 			nutzerCt.setRowData(0, result);
 			resultNutzer.clear();
 
-
 			VerticalPanel cellTableContainer = new VerticalPanel();
-			
+
 			cellTableContainer.clear();
 			cellTableContainer.add(nutzerCt);
-			
+
 			RootPanel.get("content").add(mainPanel);
 			RootPanel.get("content").add(cellTableContainer);
 
 		}
 
 	}
+
+	class CreateAboCallback implements AsyncCallback<Abonnement> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Fehler: " + caught.getMessage());
+		}
+
+		@Override
+		public void onSuccess(Abonnement result) {
+
+			Window.alert("Sie folgen jetzt " + ssm.getSelectedObject().getNickname());
+			AllAbonnementView apv = new AllAbonnementView();
+			Window.alert("refresh");
+			StartseiteForm startseiteForm = new StartseiteForm();
+
+		}
+
+	}
+
 }
