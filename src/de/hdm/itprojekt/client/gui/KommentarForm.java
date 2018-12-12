@@ -2,6 +2,7 @@ package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
 
+import com.google.appengine.api.search.query.ExpressionParser.negation_return;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
@@ -11,6 +12,7 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -21,7 +23,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
+import de.hdm.itprojekt.client.KommentarNutzerWrapper;
+import de.hdm.itprojekt.client.LoginInfo;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
@@ -44,27 +50,25 @@ public class KommentarForm extends VerticalPanel {
 	private HorizontalPanel allKommentarContainer = new HorizontalPanel();
 	private EditTextCell editTextCell = new EditTextCell();
 	private TextCell textCell = new TextCell();
-	private Kommentar kommentar = null;
-	private Nutzer nutzer = new Nutzer();
+	private KommentarNutzerWrapper kommentar = null;
 	private CellTableKommentar allKommentarCellTable = null;
 	private CellTableKommentar.DateColumn dateColumn = null;
 	private CellTableKommentar.KommentarColumn kommentarColumn = null;
 	private CellTableKommentar.NutzerColumn nutzerColumn = null;
-
 	private static SocialMediaAdminAsync socialMediaVerwaltung = de.hdm.itprojekt.client.ClientsideSettings
 			.getSocialMediaVerwaltung();
 
 	public KommentarForm(final Textbeitrag textbeitrag) {
+		final Nutzer nutzer = new Nutzer();
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 		nutzer.setNickname(Cookies.getCookie("nickname"));
-		Window.alert("textbeitra" + textbeitrag.getInhalt() + textbeitrag.getErzeugungsdatum() + nutzer.getNickname());
 
 		kommentieren.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				socialMediaVerwaltung.createKommentar(textbeitrag.getId(), textbeitrag.getNutzerID(),
-						kommentarTa.getValue(), nutzer.getNickname(), new AsyncCallback<Kommentar>() {
+				socialMediaVerwaltung.createKommentar(textbeitrag.getId(), nutzer.getId(), kommentarTa.getValue(),
+						new AsyncCallback<Kommentar>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -144,35 +148,40 @@ public class KommentarForm extends VerticalPanel {
 		kommentarColumn = allKommentarCellTable.new KommentarColumn(editTextCell) {
 
 			@Override
-			public void onBrowserEvent(Context context, Element elem, Kommentar object, NativeEvent event) {
+			public void onBrowserEvent(Context context, Element elem, KommentarNutzerWrapper object,
+					NativeEvent event) {
+				// Window.alert(""+ Cookies.getCookie("id") + nutzer.getId()
+				// +object.getNutzerID());
 
-				if (object.getNutzerID() == nutzer.getId()) {
+				if (nutzer.getId() == object.getNutzer().getId()) {
+
 					if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
 
-						setFieldUpdater(new FieldUpdater<Kommentar, String>() {
+						setFieldUpdater(new FieldUpdater<KommentarNutzerWrapper, String>() {
 
 							@Override
-							public void update(int index, Kommentar object, String value) {
-								object.setInhalt(value);
+							public void update(int index, KommentarNutzerWrapper object, String value) {
+								object.getKommentar().setInhalt(value);
 								if (value == "") {
-									socialMediaVerwaltung.deleteKommentar(object, new AsyncCallback<Void>() {
+									socialMediaVerwaltung.deleteKommentar(object.getKommentar(),
+											new AsyncCallback<Void>() {
 
-										@Override
-										public void onFailure(Throwable caught) {
-											Window.alert("Fehler: " + caught.getMessage());
+												@Override
+												public void onFailure(Throwable caught) {
+													Window.alert("Fehler: " + caught.getMessage());
 
-										}
+												}
 
-										@Override
-										public void onSuccess(Void result) {
-											Window.alert("Ihr Kommentar wurde erfolgreich entfernt.");
-											socialMediaVerwaltung.findKommentarByTextbeitragId(textbeitrag.getId(),
-													new ReloadCallback());
+												@Override
+												public void onSuccess(Void result) {
+													Window.alert("Ihr Kommentar wurde erfolgreich entfernt.");
+													socialMediaVerwaltung.findKommentarByTextbeitragId(
+															textbeitrag.getId(), new ReloadCallback());
 
-										}
-									});
+												}
+											});
 								}
-								socialMediaVerwaltung.saveKommentar(object, new AsyncCallback<Void>() {
+								socialMediaVerwaltung.saveKommentar(object.getKommentar(), new AsyncCallback<Void>() {
 
 									@Override
 									public void onFailure(Throwable caught) {
@@ -214,7 +223,7 @@ public class KommentarForm extends VerticalPanel {
 
 	}
 
-	class CellTableKommentarCallback implements AsyncCallback<Vector<Kommentar>> {
+	class CellTableKommentarCallback implements AsyncCallback<Vector<KommentarNutzerWrapper>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -222,7 +231,7 @@ public class KommentarForm extends VerticalPanel {
 		}
 
 		@Override
-		public void onSuccess(Vector<Kommentar> result) {
+		public void onSuccess(Vector<KommentarNutzerWrapper> result) {
 
 			allKommentarCellTable.setRowCount(result.size(), true);
 			allKommentarCellTable.setRowData(0, result);
@@ -246,7 +255,7 @@ public class KommentarForm extends VerticalPanel {
 
 	}
 
-	class ReloadCallback implements AsyncCallback<Vector<Kommentar>> {
+	class ReloadCallback implements AsyncCallback<Vector<KommentarNutzerWrapper>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -255,8 +264,9 @@ public class KommentarForm extends VerticalPanel {
 		}
 
 		@Override
-		public void onSuccess(Vector<Kommentar> result) {
+		public void onSuccess(Vector<KommentarNutzerWrapper> result) {
 
+			kommentarTa.setValue(null);
 			allKommentarCellTable.setRowCount(result.size(), true);
 			allKommentarCellTable.setRowData(0, result);
 		}

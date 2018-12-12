@@ -7,6 +7,7 @@ import com.google.appengine.api.utils.SystemProperty.Environment.Value;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.itprojekt.client.KommentarNutzerWrapper;
 import de.hdm.itprojekt.server.db.AbonnementMapper;
 import de.hdm.itprojekt.server.db.KommentarMapper;
 import de.hdm.itprojekt.server.db.NutzerMapper;
@@ -127,7 +128,7 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 			return null;
 		} else {
-			
+
 			return this.abonnementMapper.createAbonnement(abonnement);
 		}
 	}
@@ -215,8 +216,16 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
-	public Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException {
-		return this.kommentarMapper.findKommentarByTextbeitragId(textbeitragID);
+	public Vector<KommentarNutzerWrapper> findKommentarByTextbeitragId(int textbeitragID)
+			throws IllegalArgumentException {
+		Vector<Kommentar> kommentarVector = this.kommentarMapper.findKommentarByTextbeitragId(textbeitragID);
+		Vector<KommentarNutzerWrapper> wrapperVector = new Vector<KommentarNutzerWrapper>();
+
+		for (Kommentar kommentar : kommentarVector) {
+			wrapperVector.add(new KommentarNutzerWrapper(kommentar, findNutzerByID(kommentar.getNutzerID())));
+		}
+
+		return wrapperVector;
 	}
 
 	@Override
@@ -231,13 +240,12 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
-	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt, String nickname) throws IllegalArgumentException {
+	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException {
 		Kommentar kommentar = new Kommentar();
 		kommentar.setTextbeitragID(textbeitragID);
 		kommentar.setNutzerID(nutzerID);
 		kommentar.setInhalt(inhalt);
 		kommentar.setErzeugungsdatum(new Date());
-		kommentar.setNickname(nickname);
 		return this.kommentarMapper.createKommentar(kommentar);
 	}
 

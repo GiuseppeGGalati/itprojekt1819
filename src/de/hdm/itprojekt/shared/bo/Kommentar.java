@@ -2,10 +2,11 @@ package de.hdm.itprojekt.shared.bo;
 
 import java.util.Date;
 
-public class Kommentar extends BusinessObject{
+public class Kommentar extends BusinessObject {
 
 	/**
-	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch zwischen Server und Client.
+	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch
+	 * zwischen Server und Client.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -13,17 +14,15 @@ public class Kommentar extends BusinessObject{
 	 * Deklarieren der Variablen
 	 */
 	private int textbeitragID = 0;
-	
+
 	private int nutzerID = 0;
-	
+
 	private String inhalt = "";
-	
+
 	private Date erzeugungsdatum = null;
-	
+
 	private Date modifikationsdatum = null;
-	
-	private String nickname = "";
-	
+
 	/**
 	 * Methoden der Klasse Kommentar
 	 */
@@ -67,11 +66,4 @@ public class Kommentar extends BusinessObject{
 		this.modifikationsdatum = modifikationsdatum;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
 }

@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import de.hdm.itprojekt.client.KommentarNutzerWrapper;
 import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
@@ -50,10 +51,9 @@ public interface SocialMediaAdminAsync {
 
 	void saveTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
 
-	void createKommentar(int textbeitragID, int nutzerID, String inhalt, String nickname,
-			AsyncCallback<Kommentar> callback);
+	void createKommentar(int textbeitragID, int nutzerID, String inhalt, AsyncCallback<Kommentar> callback);
 
-	void findKommentarByTextbeitragId(int textbeitragID, AsyncCallback<Vector<Kommentar>> callback);
+	void findKommentarByTextbeitragId(int textbeitragID, AsyncCallback<Vector<KommentarNutzerWrapper>> callback);
 
 	void deleteKommentar(Kommentar kommentar, AsyncCallback<Void> callback);
 

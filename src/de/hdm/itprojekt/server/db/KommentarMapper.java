@@ -42,7 +42,7 @@ public class KommentarMapper {
 
 			if (rs.next()) {
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum, nickname) VALUES(?, ?, ?, ?, ?, ?) ",
+						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum) VALUES(?, ?, ?, ?, ?) ",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, kommentar.getId());
@@ -50,7 +50,6 @@ public class KommentarMapper {
 				stmt1.setInt(3, kommentar.getNutzerID());
 				stmt1.setString(4, kommentar.getInhalt());
 				stmt1.setTimestamp(5, sqlDate);
-				stmt1.setString(6, kommentar.getNickname());
 
 				System.out.println(stmt);
 				stmt1.executeUpdate();
@@ -76,7 +75,7 @@ public class KommentarMapper {
 
 		try {
 			PreparedStatement stmt1 = con.prepareStatement(sql);
-					
+
 			stmt1.setString(1, kommentar.getInhalt());
 			stmt1.setTimestamp(2, sqlDate1);
 			stmt1.setInt(3, kommentar.getId());
@@ -139,7 +138,6 @@ public class KommentarMapper {
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
-				kommentar.setNickname(rs.getString("nickname"));
 
 				result.addElement(kommentar);
 
@@ -171,8 +169,6 @@ public class KommentarMapper {
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
-				kommentar.setNickname(rs.getString("nickname"));
-
 
 				k = kommentar;
 
@@ -191,8 +187,8 @@ public class KommentarMapper {
 		Vector<Kommentar> result = new Vector<Kommentar>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `kommentar` WHERE `textbeitragid`= ?"
-					+ " ORDER BY id DESC");
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT * FROM `kommentar` WHERE `textbeitragid`= ?" + " ORDER BY id DESC");
 
 			stmt.setInt(1, textbeitragID);
 			ResultSet rs = stmt.executeQuery();
@@ -200,16 +196,14 @@ public class KommentarMapper {
 			while (rs.next()) {
 
 				Kommentar kommentar = new Kommentar();
-				
+
 				kommentar.setId(rs.getInt("id"));
 				kommentar.setTextbeitragID(rs.getInt("textbeitragid"));
 				kommentar.setNutzerID(rs.getInt("nutzerid"));
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
-				kommentar.setNickname(rs.getString("nickname"));
 
-				
 				result.addElement(kommentar);
 			}
 		} catch (SQLException e2) {

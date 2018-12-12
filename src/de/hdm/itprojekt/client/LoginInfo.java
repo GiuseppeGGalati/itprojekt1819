@@ -8,7 +8,7 @@ import java.io.Serializable;
  * verfügbar sind.
  */
 
-public class LoginInfo implements Serializable{
+public class LoginInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
