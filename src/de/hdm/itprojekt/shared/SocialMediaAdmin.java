@@ -54,7 +54,7 @@ public interface SocialMediaAdmin extends RemoteService {
 
 	void saveTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
 
-	Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException;
+	Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt, String nickname) throws IllegalArgumentException;
 
 	Vector<Kommentar> findKommentarByTextbeitragId(int textbeitragID) throws IllegalArgumentException;
 

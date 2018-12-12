@@ -50,7 +50,8 @@ public interface SocialMediaAdminAsync {
 
 	void saveTextbeitrag(Textbeitrag textbeitrag, AsyncCallback<Void> callback);
 
-	void createKommentar(int textbeitragID, int nutzerID, String inhalt, AsyncCallback<Kommentar> callback);
+	void createKommentar(int textbeitragID, int nutzerID, String inhalt, String nickname,
+			AsyncCallback<Kommentar> callback);
 
 	void findKommentarByTextbeitragId(int textbeitragID, AsyncCallback<Vector<Kommentar>> callback);
 

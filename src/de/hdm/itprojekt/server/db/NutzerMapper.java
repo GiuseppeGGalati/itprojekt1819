@@ -72,7 +72,7 @@ public class NutzerMapper {
 			 * Zunächst schauen wir nach, welches der momentan höchste
 			 * Primärschlüsselwert ist in der Tabelle Nutzer.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM nutzer");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM nutzer");
 			if (rs.next()) {
 				nutzer.setId(rs.getInt("maxid") + 1);
 

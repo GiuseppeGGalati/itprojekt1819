@@ -38,11 +38,11 @@ public class KommentarMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid" + "FROM kommentar");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM kommentar");
 
 			if (rs.next()) {
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum) VALUES(?, ?, ?, ?, ?) ",
+						"INSERT INTO kommentar(id, textbeitragid, nutzerid, inhalt, erzeugungsdatum, nickname) VALUES(?, ?, ?, ?, ?, ?) ",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, kommentar.getId());
@@ -50,6 +50,7 @@ public class KommentarMapper {
 				stmt1.setInt(3, kommentar.getNutzerID());
 				stmt1.setString(4, kommentar.getInhalt());
 				stmt1.setTimestamp(5, sqlDate);
+				stmt1.setString(6, kommentar.getNickname());
 
 				System.out.println(stmt);
 				stmt1.executeUpdate();
@@ -124,7 +125,7 @@ public class KommentarMapper {
 		Vector<Kommentar> result = new Vector<Kommentar>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `kommentar` ORDER BY `nutzerid` ASC");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `kommentar` ORDER BY `erzeugungsdatum` DESC");
 
 			ResultSet rs = stmt.executeQuery();
 
@@ -138,6 +139,7 @@ public class KommentarMapper {
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
+				kommentar.setNickname(rs.getString("nickname"));
 
 				result.addElement(kommentar);
 
@@ -169,6 +171,8 @@ public class KommentarMapper {
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
+				kommentar.setNickname(rs.getString("nickname"));
+
 
 				k = kommentar;
 
@@ -203,6 +207,8 @@ public class KommentarMapper {
 				kommentar.setInhalt(rs.getString("inhalt"));
 				kommentar.setErzeugungsdatum(rs.getDate("erzeugungsdatum"));
 				kommentar.setModifikationsdatum(rs.getDate("modifikationsdatum"));
+				kommentar.setNickname(rs.getString("nickname"));
+
 				
 				result.addElement(kommentar);
 			}

@@ -22,6 +22,8 @@ public class Kommentar extends BusinessObject{
 	
 	private Date modifikationsdatum = null;
 	
+	private String nickname = "";
+	
 	/**
 	 * Methoden der Klasse Kommentar
 	 */
@@ -63,5 +65,13 @@ public class Kommentar extends BusinessObject{
 
 	public void setModifikationsdatum(Date modifikationsdatum) {
 		this.modifikationsdatum = modifikationsdatum;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }

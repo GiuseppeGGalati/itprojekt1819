@@ -125,10 +125,11 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 
 		if (abo.getId() != 0) {
 
-			System.out.println("Sie folgen diesem Nutzer bereits.");
 			return null;
+		} else {
+			
+			return this.abonnementMapper.createAbonnement(abonnement);
 		}
-		return this.abonnementMapper.createAbonnement(abonnement);
 	}
 
 	@Override
@@ -230,13 +231,13 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 	}
 
 	@Override
-	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt) throws IllegalArgumentException {
+	public Kommentar createKommentar(int textbeitragID, int nutzerID, String inhalt, String nickname) throws IllegalArgumentException {
 		Kommentar kommentar = new Kommentar();
 		kommentar.setTextbeitragID(textbeitragID);
 		kommentar.setNutzerID(nutzerID);
 		kommentar.setInhalt(inhalt);
 		kommentar.setErzeugungsdatum(new Date());
-		kommentar.setModifikationsdatum(new Date());
+		kommentar.setNickname(nickname);
 		return this.kommentarMapper.createKommentar(kommentar);
 	}
 

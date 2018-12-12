@@ -2,8 +2,6 @@ package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,12 +15,10 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.client.ClientsideSettings;
-import de.hdm.itprojekt.client.Itprojekt1819;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Nutzer;
@@ -206,13 +202,20 @@ public class KontaktSuche extends VerticalPanel {
 		@Override
 		public void onSuccess(Abonnement result) {
 
-			Window.alert("Sie folgen jetzt " + ssm.getSelectedObject().getNickname());
-			AllAbonnementView apv = new AllAbonnementView();
-			Window.alert("refresh");
-			StartseiteForm startseiteForm = new StartseiteForm();
+			if (result == null) {
+				Window.alert("Sie folgen diesem Nutzer bereits.");
+			} else {
+
+				Window.alert("Sie folgen jetzt " + ssm.getSelectedObject().getNickname());
+				StartseiteForm startseiteform = new StartseiteForm();
+				Toolbar toolbar = new Toolbar();
+				AllAbonnementView apv = new AllAbonnementView();
+				RootPanel.get("leftmenutree").clear();
+				RootPanel.get("leftmenutree").add(toolbar);
+				RootPanel.get("leftmenutree").add(apv);
+			}
 
 		}
 
 	}
-
 }
