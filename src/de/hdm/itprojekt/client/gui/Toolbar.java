@@ -10,18 +10,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.hdm.itprojekt.client.ClientsideSettings;
 import de.hdm.itprojekt.client.LoginInfo;
 import de.hdm.itprojekt.shared.LoginService;
 import de.hdm.itprojekt.shared.LoginServiceAsync;
-import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 
 public class Toolbar extends LeftSideFrame {
 
 	/**
 	 * Instanziierung des Proxy Objekts für den Editor
 	 */
-	private static SocialMediaAdminAsync socialmediaVerwaltung = ClientsideSettings.getSocialMediaVerwaltung();
 
 	private LoginInfo loginInfo = null;
 
@@ -104,14 +101,14 @@ public class Toolbar extends LeftSideFrame {
 		}
 
 	}
-	
-	class SuchenClickHandler implements ClickHandler{
+
+	class SuchenClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			KontaktSuche kontaktSuche = new KontaktSuche();
 		}
-		
+
 	}
 
 }

@@ -13,6 +13,7 @@ public class StartseiteForm extends VerticalPanel {
 		VerticalPanel homePanel = new VerticalPanel();
 		Label welcomeLabel = new Label("Herzlich Willkommen auf deiner Startseite");
 
+		welcomeLabel.setStylePrimaryName("h3");
 		homePanel.setSpacing(10);
 		this.setSpacing(8);
 		homePanel.add(welcomeLabel);

@@ -2,10 +2,11 @@ package de.hdm.itprojekt.shared.bo;
 
 import java.util.Date;
 
-public class Textbeitrag extends BusinessObject{
+public class Textbeitrag extends BusinessObject {
 
 	/**
-	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch zwischen Server und Client.
+	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch
+	 * zwischen Server und Client.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -13,17 +14,17 @@ public class Textbeitrag extends BusinessObject{
 	 * Deklarieren der Variablen
 	 */
 	private int pinnwandID = 0;
-	
+
 	private int nutzerID = 0;
-	
+
 	private int kommentarID = 0;
-	
+
 	private Date erzeugungsdatum = null;
-	
+
 	private Date modifikationsdatum = null;
-	
+
 	private String inhalt = "";
-	
+
 	/**
 	 * Methoden der Klasse Textbeitrag
 	 */

@@ -3,8 +3,6 @@ package de.hdm.itprojekt.server;
 import java.util.Date;
 import java.util.Vector;
 
-import com.google.appengine.api.utils.SystemProperty.Environment.Value;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.itprojekt.client.KommentarNutzerWrapper;
@@ -14,6 +12,7 @@ import de.hdm.itprojekt.server.db.NutzerMapper;
 import de.hdm.itprojekt.server.db.PinnwandMapper;
 import de.hdm.itprojekt.server.db.TextbeitragMapper;
 import de.hdm.itprojekt.shared.SocialMediaAdmin;
+import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Abonnement;
 import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
@@ -108,12 +107,6 @@ public class SocialMediaAdminImpl extends RemoteServiceServlet implements Social
 		return this.pinnwandMapper.createPinnwand(pinnwand);
 	}
 
-	@Override
-	public Nutzer createNutzer(String email) throws IllegalArgumentException {
-		Nutzer nutzer = new Nutzer();
-		nutzer.setEmail(email);
-		return this.nutzerMapper.createNutzer(nutzer);
-	}
 
 	@Override
 	public Abonnement createAbonnement(int nutzerID, int pinnwandID) throws IllegalArgumentException {

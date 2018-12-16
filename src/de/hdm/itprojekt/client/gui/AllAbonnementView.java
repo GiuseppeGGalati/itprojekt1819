@@ -46,14 +46,15 @@ public class AllAbonnementView extends LeftSideFrame {
 				if (ssm.getSelectedObject().getNickname() != null) {
 					AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(ssm.getSelectedObject().getId());
 				} else {
-					// StartseiteForm startseiteForm = new
-					// StartseiteForm(ssm.getSelectedObject());
+
 					StartseiteForm startseiteForm = new StartseiteForm();
 				}
 
 			}
 		});
 
+		cellList.setStylePrimaryName("AllAbonnementCellList");
+		vpanel.setStylePrimaryName("AllAbonnementViewPanel");
 		vpanel.add(cellList);
 		this.add(vpanel);
 		onLoad();

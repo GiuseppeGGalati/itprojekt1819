@@ -1,7 +1,6 @@
 package de.hdm.itprojekt.client.gui;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Abstrakte Klasse für das LeftSideFrame, somit für die Baumstruktur.
@@ -15,7 +14,6 @@ public abstract class LeftSideFrame extends HorizontalPanel {
 	 * und ruft die Methode run() auf.
 	 */
 
-	
 	public void onLoad() {
 
 		/*
@@ -23,7 +21,7 @@ public abstract class LeftSideFrame extends HorizontalPanel {
 		 * der Superklasse eine Initialisierung vorzunehmen.
 		 */
 		super.onLoad();
-		//RootPanel.get("leftmenutree").clear();
+		// RootPanel.get("leftmenutree").clear();
 
 		this.run();
 	}

@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -51,7 +50,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		Nutzer n = new Nutzer();
 		n.setId(Integer.parseInt(Cookies.getCookie("id")));
 		n.setEmail(Cookies.getCookie("email"));
-		
+
 		socialmediaVerwaltung.findNutzerByID(n.getId(), new FindNutzerCallback());
 
 		ft.setWidget(0, 0, updateLabel);
@@ -66,7 +65,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		ft.setWidget(9, 0, speichern);
 		ft.setWidget(9, 1, abbrechen);
 		ft.setWidget(9, 2, nutzerLoeschen);
-		
+
 		speichern.addClickHandler(new SpeichernClickhandler());
 		abbrechen.addClickHandler(new AbbrechenClickhandler());
 		nutzerLoeschen.addClickHandler(new DeleteNutzerClickHandler());
@@ -78,7 +77,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 	public DialogBoxNutzerUpdate(Nutzer nutzer) {
 		Nutzer n = new Nutzer();
 		n.setId(Integer.parseInt(Cookies.getCookie("id")));
-		
+
 		speichern.addClickHandler(new SpeichernClickhandler());
 		abbrechen.addClickHandler(new AbbrechenClickhandler());
 	}
@@ -105,11 +104,7 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 
-//			Nutzer n = new Nutzer();
-//			n.setId(Integer.parseInt(Cookies.getCookie("id")));
 			StartseiteForm startseiteForm = new StartseiteForm();
-//			RootPanel.get("content").clear();
-//			RootPanel.get("content").add(startseiteForm);
 		}
 
 	}
@@ -149,42 +144,38 @@ public class DialogBoxNutzerUpdate extends DialogBox {
 		}
 
 	}
-	
+
 	public class DeleteNutzerClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			boolean deleteNutzer = Window.confirm("Möchten Sie ihren Nutzer wirklich löschen");
-			if(deleteNutzer == true){
+			if (deleteNutzer == true) {
 				Nutzer nutzer = new Nutzer();
 				nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 				nutzer.setEmail(Cookies.getCookie("email"));
-				
+
 				socialmediaVerwaltung.deleteNutzer(nutzer, new DeleteNutzerCallback());
 			}
 		}
-		
+
 	}
-	
-	public class DeleteNutzerCallback implements AsyncCallback<Void>{
+
+	public class DeleteNutzerCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
 			Window.alert("Fehler beim Löschen " + caught.getMessage());
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-			// TODO Auto-generated method stub
 			Anchor signOutLink = new Anchor();
 			Window.alert("Nutzer wurde erfolgreich gelöscht");
 			signOutLink.setHref(Cookies.getCookie("signout"));
 			Window.open(signOutLink.getHref(), "_self", "");
 		}
-		
-		
+
 	}
-	
+
 }

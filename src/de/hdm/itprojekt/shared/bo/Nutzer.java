@@ -1,9 +1,10 @@
 package de.hdm.itprojekt.shared.bo;
 
-public class Nutzer extends BusinessObject{
+public class Nutzer extends BusinessObject {
 
 	/**
-	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch zwischen Server und Client.
+	 * Dient zum Serialisieren von Objekten für eine RPC fähigen Austausch
+	 * zwischen Server und Client.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -11,13 +12,13 @@ public class Nutzer extends BusinessObject{
 	 * Deklarieren der Variablen
 	 */
 	private String nachname = "";
-	
+
 	private String vorname = "";
-	
+
 	private String email = "";
-	
+
 	private String nickname = "";
-	
+
 	/**
 	 * Methoden der Klasse Abonnement
 	 */
@@ -52,8 +53,8 @@ public class Nutzer extends BusinessObject{
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	public String toString(){
-		return "<table><tr><td>"+this.getEmail()+"</td></tr></table>";
+
+	public String toString() {
+		return "<table><tr><td>" + this.getEmail() + "</td></tr></table>";
 	}
 }

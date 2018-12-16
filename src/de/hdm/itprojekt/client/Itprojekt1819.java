@@ -98,6 +98,10 @@ public class Itprojekt1819 implements EntryPoint {
 		loginPanel.add(welcomeLabel);
 		loginPanel.add(loginLabel);
 		loginPanel.add(loginButton);
+		welcomeLabel.setStylePrimaryName("landingPageWelcomeMessage");
+		loginLabel.setStylePrimaryName("landingPageWelcomeMessage");
+		loginButton.setStylePrimaryName("loginButton");
+
 		RootPanel.get("content").add(loginPanel);
 
 	}

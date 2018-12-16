@@ -15,8 +15,6 @@ public interface SocialMediaAdminAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	void createNutzer(String email, AsyncCallback<Nutzer> callback);
-
 	void createNutzer(String email, String vorname, String nachname, String nickname, AsyncCallback<Nutzer> callback);
 
 	void checkEmail(String email, AsyncCallback<Nutzer> callback);

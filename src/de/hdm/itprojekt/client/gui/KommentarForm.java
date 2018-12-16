@@ -2,17 +2,15 @@ package de.hdm.itprojekt.client.gui;
 
 import java.util.Vector;
 
-import com.google.appengine.api.search.query.ExpressionParser.negation_return;
+import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -23,11 +21,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
 
 import de.hdm.itprojekt.client.KommentarNutzerWrapper;
-import de.hdm.itprojekt.client.LoginInfo;
 import de.hdm.itprojekt.shared.SocialMediaAdminAsync;
 import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Nutzer;
@@ -38,12 +33,13 @@ public class KommentarForm extends VerticalPanel {
 	// Textbeitrag Widgets
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private VerticalPanel beitragPanel = new VerticalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Label nutzerLb = new Label();
 	private TextArea beitrag = new TextArea();
 	private Label kommentarLb = new Label("Diesen Post kommentieren:");
 	private TextArea kommentarTa = new TextArea();
 	private Button kommentieren = new Button("Kommentieren");
-	private Label datumLb = new Label();
+	private Button pinnwandBt = new Button("Zur Pinnwand");
 	private FlexTable ft = new FlexTable();
 
 	// Kommentar Widgets
@@ -62,6 +58,18 @@ public class KommentarForm extends VerticalPanel {
 		final Nutzer nutzer = new Nutzer();
 		nutzer.setId(Integer.parseInt(Cookies.getCookie("id")));
 		nutzer.setNickname(Cookies.getCookie("nickname"));
+
+		nutzerLb.setStylePrimaryName("h3");
+		kommentarLb.setStylePrimaryName("h3");
+		kommentieren.setStylePrimaryName("gwt-Button3");
+		pinnwandBt.setStylePrimaryName("gwt-Button3");
+		kommentarTa.setCharacterWidth(100);
+		kommentarTa.setVisibleLines(5);
+		beitrag.setCharacterWidth(100);
+		beitrag.setVisibleLines(5);
+		beitrag.setStylePrimaryName("gwt-TextArea");
+		kommentarTa.setStylePrimaryName("gwt-TextArea");
+		allKommentarContainer.setStylePrimaryName("cellTableWidgetContainerPanel");
 
 		kommentieren.addClickHandler(new ClickHandler() {
 
@@ -86,6 +94,15 @@ public class KommentarForm extends VerticalPanel {
 						});
 
 			}
+		});
+
+		pinnwandBt.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				AbonniertePinnwand abonniertePinnwand = new AbonniertePinnwand(textbeitrag.getNutzerID());
+			}
+
 		});
 
 		// kommentarTa.addKeyDownHandler(new KeyDownHandler() {
@@ -118,27 +135,30 @@ public class KommentarForm extends VerticalPanel {
 
 			@Override
 			public void onSuccess(Nutzer result) {
-				nutzerLb.setText("Post von: " + result.getNickname());
+
+				if (textbeitrag.getModifikationsdatum() != null) {
+					nutzerLb.setText("Post von " + result.getNickname() + "       erstellt am "
+							+ textbeitrag.getModifikationsdatum().toString());
+				} else {
+					nutzerLb.setText("Post von " + result.getNickname() + "      erstellt am "
+							+ textbeitrag.getErzeugungsdatum().toString());
+				}
+
 			}
 		});
 
 		beitrag.setEnabled(false);
 		beitrag.setText(textbeitrag.getInhalt());
 
-		if (textbeitrag.getModifikationsdatum() != null) {
-			datumLb.setText("vom: " + textbeitrag.getModifikationsdatum().toString());
-		} else {
-			datumLb.setText("vom: " + textbeitrag.getErzeugungsdatum().toString());
-		}
-
 		ft.setWidget(0, 0, nutzerLb);
-		ft.setWidget(0, 1, datumLb);
 		ft.setWidget(1, 0, beitrag);
 		ft.setWidget(2, 0, kommentarLb);
 		ft.setWidget(3, 0, kommentarTa);
-		ft.setWidget(4, 0, kommentieren);
 
+		buttonPanel.add(kommentieren);
+		buttonPanel.add(pinnwandBt);
 		beitragPanel.add(ft);
+		beitragPanel.add(buttonPanel);
 
 		socialMediaVerwaltung.findKommentarByTextbeitragId(textbeitrag.getId(), new CellTableKommentarCallback());
 
@@ -150,8 +170,6 @@ public class KommentarForm extends VerticalPanel {
 			@Override
 			public void onBrowserEvent(Context context, Element elem, KommentarNutzerWrapper object,
 					NativeEvent event) {
-				// Window.alert(""+ Cookies.getCookie("id") + nutzer.getId()
-				// +object.getNutzerID());
 
 				if (nutzer.getId() == object.getNutzer().getId()) {
 
@@ -220,7 +238,11 @@ public class KommentarForm extends VerticalPanel {
 		super.onLoad();
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(mainPanel);
-
+		allKommentarContainer.setStylePrimaryName("cellTableWidgetContainerPanel");
+		allKommentarCellTable.setStylePrimaryName("AllCellTable");
+		kommentarColumn.setCellStyleNames("CellStyleKommentar");
+		nutzerColumn.setCellStyleNames("CellStyleInfoCells");
+		dateColumn.setCellStyleNames("CellStyleInfoCells");
 	}
 
 	class CellTableKommentarCallback implements AsyncCallback<Vector<KommentarNutzerWrapper>> {

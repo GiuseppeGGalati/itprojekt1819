@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import de.hdm.itprojekt.shared.bo.Kommentar;
 import de.hdm.itprojekt.shared.bo.Textbeitrag;
 
 /**
@@ -43,8 +42,7 @@ public class TextbeitragMapper {
 			if (rs.next()) {
 
 				PreparedStatement stmt1 = con.prepareStatement(
-						"INSERT INTO textbeitrag(id, nutzerid, inhalt, erzeugungsdatum)"
-						+ " VALUES(?, ?, ?, ?)",
+						"INSERT INTO textbeitrag(id, nutzerid, inhalt, erzeugungsdatum)" + " VALUES(?, ?, ?, ?)",
 						Statement.RETURN_GENERATED_KEYS);
 
 				stmt1.setInt(1, textbeitrag.getId());
@@ -81,7 +79,6 @@ public class TextbeitragMapper {
 			stmt1.setTimestamp(2, sqlDate1);
 			stmt1.setInt(3, textbeitrag.getId());
 			stmt1.executeUpdate();
-
 
 			System.out.println("Updated");
 
@@ -160,8 +157,8 @@ public class TextbeitragMapper {
 		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM `textbeitrag` WHERE `nutzerid`=? "
-					+ "ORDER BY id DESC");
+			PreparedStatement stmt = con
+					.prepareStatement("SELECT * FROM `textbeitrag` WHERE `nutzerid`=? " + "ORDER BY id DESC");
 
 			stmt.setInt(1, nutzerID);
 			ResultSet rs = stmt.executeQuery();

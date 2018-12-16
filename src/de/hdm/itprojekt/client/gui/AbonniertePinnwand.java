@@ -49,7 +49,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 	private EditTextCell editTextCell = new EditTextCell();
 	private CellTableTextbeitrag.DateColumn dateColumn = null;
 	private CellTableTextbeitrag.BeitragColumn beitragColumn = null;
-	private Textbeitrag tb = null;
 	private TextCell textCell = new TextCell();
 	private CellTableTextbeitrag allTextbeitragCellTable = null;
 
@@ -63,6 +62,13 @@ public class AbonniertePinnwand extends VerticalPanel {
 		socialMediaVerwaltung.findAbonnementByNutzerID(nutzerID, new FindAboCallback());
 
 		socialMediaVerwaltung.findTextbeitragByNutzerID(nutzerID, new CellTableCallback());
+
+		nicknameLabel.setStylePrimaryName("h3");
+		beitragTb.setStylePrimaryName("gwt-TextArea");
+		beitragTb.setCharacterWidth(100);
+		beitragTb.setVisibleLines(5);
+		postBt.setStylePrimaryName("gwt-Button3");
+		allTextbeitragCellTableContainer.setStylePrimaryName("cellTableWidgetContainerPanel");
 
 		/**
 		 * Hat zur Folge, dass das Erstellen von Textbeiträgen nur auf der
@@ -125,7 +131,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 				@Override
 				public void onClick(ClickEvent event) {
 					socialMediaVerwaltung.deleteAbonnement(nutzer.getId(), nutzerID, new AbonnementLoeschenCallback());
-					Window.alert("" + nutzer.getId() + " " + nutzerID);
 				}
 
 			});
@@ -201,6 +206,10 @@ public class AbonniertePinnwand extends VerticalPanel {
 		super.onLoad();
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(mainPanel);
+		allTextbeitragCellTable.setStylePrimaryName("AllCellTable");
+		beitragColumn.setCellStyleNames("CellStyle");
+		dateColumn.setCellStyleNames("CellStyleInfoCells");
+
 	}
 
 	class CellTableCallback implements AsyncCallback<Vector<Textbeitrag>> {
@@ -237,10 +246,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 		@Override
 		public void onSuccess(Vector<Abonnement> result) {
 
-			for (Abonnement abonnement : result) {
-				Window.alert("nutzerid: " + abonnement.getNutzerID() + " pinnwandid: " + abonnement.getPinnwandID()
-						+ " aboid: " + abonnement.getId());
-			}
 		}
 
 	}
@@ -256,7 +261,6 @@ public class AbonniertePinnwand extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 
-			Window.alert("" + nutzer.getEmail());
 			Window.alert("User entfolgt");
 			RootPanel.get("content").clear();
 			RootPanel.get("leftmenutree").clear();

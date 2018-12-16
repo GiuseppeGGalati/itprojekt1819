@@ -23,12 +23,10 @@ public class CellTableNutzer extends CellTable<Nutzer> {
 
 		public EmailColumn(Cell<String> cell) {
 			super(cell);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public String getValue(Nutzer object) {
-			// TODO Auto-generated method stub
 			return object.getEmail();
 		}
 
@@ -38,12 +36,10 @@ public class CellTableNutzer extends CellTable<Nutzer> {
 
 		public NicknameColumn(Cell<String> cell) {
 			super(cell);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public String getValue(Nutzer object) {
-			// TODO Auto-generated method stub
 			return object.getNickname();
 		}
 
@@ -53,12 +49,10 @@ public class CellTableNutzer extends CellTable<Nutzer> {
 
 		public NachnameColumn(Cell<String> cell) {
 			super(cell);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public String getValue(Nutzer object) {
-			// TODO Auto-generated method stub
 			return object.getNachname();
 		}
 
@@ -68,12 +62,10 @@ public class CellTableNutzer extends CellTable<Nutzer> {
 
 		public VornameColumn(Cell<String> cell) {
 			super(cell);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public String getValue(Nutzer object) {
-			// TODO Auto-generated method stub
 			return object.getVorname();
 		}
 
